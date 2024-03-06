@@ -1,0 +1,24 @@
+// Path: src/components/Footer.scss
+
+.footer {
+  background-color: #fafafa;
+  border-top: 1px solid #dbdbdb;
+  padding: 16px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  .footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1010px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  .footer-copy {
+    color: #999;
+    font-size: 0.9em;
+  }
+}
