@@ -1,9 +1,9 @@
 // Path: src/components/Footer.scss
 
 .footer {
-  background-color: #fafafa;
+  background-color: darkcyan;
   border-top: 1px solid #dbdbdb;
-  padding: 16px 0;
+  padding: 0px 0;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -13,7 +13,6 @@
     justify-content: center;
     align-items: center;
     max-width: 1010px;
-    padding: 0 20px;
     margin: 0 auto;
   }
 
