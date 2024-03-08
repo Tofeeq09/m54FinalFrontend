@@ -6,7 +6,7 @@ import { login } from "../../utils/fetch";
 
 const LoginPage = ({ setUser }) => {
   const [userData, setUserData] = useState({
-    username: "",
+    emailOrUsername: "",
     password: "",
   });
 
@@ -22,7 +22,8 @@ const LoginPage = ({ setUser }) => {
     e.preventDefault();
     try {
       const response = await login({
-        username: userData.username,
+        email: userData.emailOrUsername.includes("@") ? userData.emailOrUsername : undefined,
+        username: !userData.emailOrUsername.includes("@") ? userData.emailOrUsername : undefined,
         password: userData.password,
       });
       setUser(response.user);
@@ -38,9 +39,9 @@ const LoginPage = ({ setUser }) => {
       <form onSubmit={handleSubmit} className="login-form">
         <input
           type="text"
-          name="username"
-          placeholder="username"
-          value={userData.username}
+          name="emailOrUsername"
+          placeholder="Email or Username"
+          value={userData.emailOrUsername}
           onChange={handleChange}
           className="login-input"
         />
