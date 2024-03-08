@@ -18,7 +18,7 @@ const EventsForm = ({ handleClose }) => {
         }
       );
       console.log("Events created successfully:", response.data);
-      handleClose(); // Close the modal after successful submission
+      handleClose();
     } catch (error) {
       console.error("Error creating events:", error);
       setError("Failed to create events. Please try again.");

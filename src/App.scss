@@ -1,29 +1,25 @@
-.navbar {
-  background-color: #333; /* Set background color */
-  padding: 10px 20px; /* Add padding */
-  display: flex;
-  justify-content: space-between; /* Distribute items along the main axis */
-  align-items: center; /* Center items vertically */
+/* Reset default styles */
+html,
+body,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: "Arial", sans-serif; /* Use a modern font */
+  background-color: #f4f4f4; /* Set a light background color */
+  color: #333; /* Set default text color */
+}
 
-  .nav-links {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Apply modern styling to links */
+a {
+  text-decoration: none;
+  color: #333; /* Set default link color */
+  transition: color 0.3s ease; /* Smooth color transition */
 
-    li {
-      margin-right: 20px; /* Adjust spacing between nav items */
-    }
-
-    a {
-      text-decoration: none;
-      color: white; /* Set text color */
-      transition: color 0.3s ease; /* Smooth color transition */
-
-      &:hover {
-        color: #66c2ff; /* Change color on hover */
-      }
-    }
+  &:hover {
+    color: #66c2ff; /* Change color on hover */
   }
 }
