@@ -3,18 +3,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 
-function openModal() {
-  setIsOpen(true);
-}
-
-function closeModal() {
-  setIsOpen(false);
-}
-
 const GroupForm = () => {
+  const [groupName, setGroupName] = useState("");
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     alert(inputs);
+  };
+
+  const changeHandler = (e) => {
+    setGroupName(e.target.value);
   };
   return (
     <div>
@@ -46,3 +51,5 @@ const GroupForm = () => {
     </div>
   );
 };
+
+export default GroupForm;
