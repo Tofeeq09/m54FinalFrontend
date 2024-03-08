@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EventsForm from "../events/eventsform";
 import GroupForm from "../../components/groups/GroupForm";
 
-const LandingPage = () => {
+const LandingPage = ({ user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
