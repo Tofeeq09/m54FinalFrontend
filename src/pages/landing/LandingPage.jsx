@@ -1,35 +1,38 @@
 import React, { useState } from "react";
-import EventsForm from "../events/eventsform";
 import GroupForm from "../../components/groups/GroupForm";
+import EventsForm from "../events/eventsform";
 
-const LandingPage = ({ user }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const LandingPage = () => {
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [isEventsModalOpen, setIsEventsModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openGroupModal = () => {
+    setIsGroupModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeGroupModal = () => {
+    setIsGroupModalOpen(false);
+  };
+
+  const openEventsModal = () => {
+    setIsEventsModalOpen(true);
+  };
+
+  const closeEventsModal = () => {
+    setIsEventsModalOpen(false);
   };
 
   return (
     <div className="landing-page">
-      <h1>Welcome Squads</h1>
-      <p>LandingPage</p>
-      <GroupForm user={user} />
-      <p>The place where tech connects people</p>
-      <button onClick={openModal}>Open Events Modal</button>
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>
-              &times;
-            </span>
-            <EventsForm closeModal={closeModal} />
-          </div>
-        </div>
-      )}
+      <h1>Welcome to Our Platform</h1>
+      <button onClick={openGroupModal}>Open Group Modal</button>
+      <button onClick={openEventsModal}>Open Events Modal</button>
+
+      {/* Group modal */}
+      {isGroupModalOpen && <GroupForm closeModal={closeGroupModal} />}
+
+      {/* Events modal */}
+      {isEventsModalOpen && <EventsForm closeModal={closeEventsModal} />}
     </div>
   );
 };
