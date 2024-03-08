@@ -1,10 +1,10 @@
 import GroupForm from "../../components/groups/GroupForm";
 
-const LandingPage = () => {
+const LandingPage = ({ user }) => {
   return (
     <div>
       LandingPage
-      <GroupForm />
+      <GroupForm user={user} />
     </div>
   );
 };

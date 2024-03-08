@@ -3,47 +3,37 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 
-const GroupForm = () => {
+const GroupForm = ({ user }) => {
   const [groupName, setGroupName] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   function openModal() {
-    setIsOpen(true);
+    setModalIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setModalIsOpen(false);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(inputs);
   };
 
-  const changeHandler = (e) => {
+  const handleChange = (e) => {
     setGroupName(e.target.value);
   };
   return (
     <div>
       <button onClick={openModal}>Open Group Form</button>
-      <Modal isOpen={openModal} onRequestClose={closeModal}>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <button onClick={closeModal}>Close</button>
         <form onSubmit={handleSubmit}>
           <label>
             Enter your username:
-            <input
-              type="text"
-              name="username"
-              value={inputs.username || ""}
-              onChange={handleChange}
-            />
+            <input type="text" name="username" onChange={handleChange} />
           </label>
           <label>
             Enter a Group:
-            <input
-              type="text"
-              name="groupname"
-              value={inputs.groupname || ""}
-              onChange={handleChange}
-            />
+            <input type="text" name="groupname" onChange={handleChange} />
           </label>
           <input type="submit" />
         </form>
