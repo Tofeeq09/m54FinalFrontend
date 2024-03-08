@@ -24,9 +24,10 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      <h1>Welcome to Our Platform</h1>
-      <button onClick={openGroupModal}>Open Group Modal</button>
-      <button onClick={openEventsModal}>Open Events Modal</button>
+      <h1>Welcome to Squads</h1>
+      <h2>The place where technology connects people</h2>
+      <button onClick={openGroupModal}>Join a Group</button>
+      <button onClick={openEventsModal}>Create Or Join Events</button>
 
       {/* Group modal */}
       {isGroupModalOpen && <GroupForm closeModal={closeGroupModal} />}
