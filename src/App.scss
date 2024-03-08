@@ -1,0 +1,29 @@
+.navbar {
+  background-color: #333; /* Set background color */
+  padding: 10px 20px; /* Add padding */
+  display: flex;
+  justify-content: space-between; /* Distribute items along the main axis */
+  align-items: center; /* Center items vertically */
+  font-family: "Arial", sans-serif; /* Use a modern font */
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    li {
+      margin-right: 20px; /* Adjust spacing between nav items */
+    }
+
+    a {
+      text-decoration: none;
+      color: white; /* Set text color */
+      transition: color 0.3s ease; /* Smooth color transition */
+
+      &:hover {
+        color: #66c2ff; /* Change color on hover */
+      }
+    }
+  }
+}
