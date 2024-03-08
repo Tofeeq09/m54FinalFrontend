@@ -7,6 +7,7 @@ import LandingPage from "./pages/landing/LandingPage";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import { useState } from "react";
+import GroupForm from "./components/groups/GroupForm";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -14,7 +15,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage user={user} />} />
         <Route path="/home" element={<Dashboard />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
