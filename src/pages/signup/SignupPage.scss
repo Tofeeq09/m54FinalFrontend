@@ -1,0 +1,42 @@
+// Path: src/pages/SignupPage.scss
+
+.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fafafa;
+
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #dbdbdb;
+    background-color: #fff;
+
+    .signup-input {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    .signup-button {
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      background-color: #3897f0;
+      color: #fff;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 20px;
+      align-self: center;
+    }
+  }
+}

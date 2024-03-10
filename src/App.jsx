@@ -1,24 +1,32 @@
+// src/App.jsx
+
 import "./App.scss";
-import { Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/dashboard/Dashboard";
-import SignupPage from "./pages/signup/SignupPage";
-import LoginPage from "./pages/login/LoginPage";
-import LandingPage from "./pages/landing/LandingPage";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
+import { Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/landing/LandingPage";
+import SignupPage from "./pages/signup/SignupPage";
+import LoginPage from "./pages/login/LoginPage";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Profile from "./pages/profile/Profile";
+import GroupPage from "./pages/group/GroupPage";
+import EventPage from "./pages/event/EventPage";
+
 import { useState } from "react";
-import GroupForm from "./components/groups/GroupForm";
 
 function App() {
   const [user, setUser] = useState(null);
   return (
     <>
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<LandingPage user={user} />} />
-        <Route path="/home" element={<Dashboard />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/home" element={<Dashboard user={user} />} />
+        <Route path="/signup" element={<SignupPage setUser={setUser} />} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
+        <Route path="/group/:groupId" element={<GroupPage user={user} />} />
+        <Route path="/event/:eventId" element={<EventPage user={user} />} />
+        <Route path="/profile/:username" element={<Profile user={user} />} />
       </Routes>
       <Footer />
     </>
