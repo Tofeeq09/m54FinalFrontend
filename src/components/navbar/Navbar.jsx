@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import "./Navbar.scss";
 
-import "../navbar/Navbar.scss";
 import logo from "../../assets/logo.jpeg";
 import { logout } from "../../utils/fetch";
 
 const Navbar = ({ user, setUser, avatar }) => {
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await logout(user.authToken);
       setUser(null);
+      navigate("/")
     } catch (error) {
       console.error(error);
     }
