@@ -24,13 +24,9 @@ const LandingPage = ({ user, setUser }) => {
         </div>
         <div className="slides slide2">
           <p>
-            The loneliness epidemic is a pressing societal issue characterized
-            by feelings of isolation and a lack of meaningful social
-            interactions. Squads provides a platform for individuals to combat
-            loneliness by connecting with like-minded peers, fostering
-            friendships, and supporting each other through life&apos;s
-            challenges. Join Squads today to prioritize your mental health and
-            build lasting relationships in a supportive community.
+            🚀 Join Squads Now! 🚀 <br />
+            Connect with fellow coders, collaborate on projects, and discover coding events in your area. Don&apos;t
+            miss out—join Squads today!
           </p>
         </div>
         <div className="slides slide3">

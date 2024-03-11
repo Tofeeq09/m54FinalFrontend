@@ -61,45 +61,62 @@ const Dashboard = ({ user }) => {
 
   return (
     <div className="dashboard">
-      <h1>DASHBOARD</h1>
+      <h1>{user && <h1>Hello, {user.username}!</h1>}</h1>
       <div className="dashboard-content">
         <div className="lists">
           <div className="friend-list">
-            <h2>
-              Your Friends <FiPlus />
-            </h2>
+            <details>
+              <summary className="title">
+                Your Friends <FiPlus />
+              </summary>
+              {/* Content goes here */}
+            </details>
           </div>
-          <div className="group-list">
+
+          <div>
             <h2>
-              Your Groups <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
+              <details>
+                <summary className="title">
+                  Your Groups <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
+                </summary>
+                {groupErr && <p>{groupErr}</p>}
+                <div className="group-content">
+                  {groups.map((group) => (
+                    <GroupCard key={group.id} group={group} onClick={() => navigate(`/group/${group.id}`)} />
+                  ))}
+                </div>
+              </details>
             </h2>
-            {groupErr && <p>{groupErr}</p>}
-            {groups.map((group) => (
-              <GroupCard key={group.id} group={group} onClick={() => navigate(`/group/${group.id}`)} />
-            ))}
           </div>
         </div>
+        <h2 className="title">Topics</h2>
         <div className="topics">
-          <h2>TOPICS</h2>
           {topics.map((topic, index) => (
             <TopicCard key={index} topic={topic} />
           ))}
         </div>
+
         <div className="events">
-          {eventErr && <p>{eventErr}</p>}
-          <h2>Upcoming Events</h2>
-          {events &&
-            events.upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
-            ))}
-          <h2>Past Events</h2>
-          {events &&
-            events.pastEvents.map((event) => (
-              <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
-            ))}
+          <details>
+            <summary className="title">Upcoming Events</summary>
+            {eventErr && <p>{eventErr}</p>}
+            {events &&
+              events.upcomingEvents.map((event) => (
+                <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+              ))}
+          </details>
+
+          <details>
+            <summary className="title">Past Events</summary>
+            {eventErr && <p>{eventErr}</p>}
+            {events &&
+              events.pastEvents.map((event) => (
+                <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+              ))}
+          </details>
         </div>
       </div>
-      <GroupForm isOpen={isAddGroupModalOpen} onClose={() => setIsAddGroupModalOpen(false)} />
+      <GroupForm isOpen={isAddGroupModalOpen} onClose={() => setIsAddGroupModalOpen(false)} token={user?.authToken} />
     </div>
   );
 };

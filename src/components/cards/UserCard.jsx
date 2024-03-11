@@ -1,4 +1,5 @@
-import React from "react";
+// src/components/cards/UserCard.jsx
+
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./UserCard.css";

@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
-import "../navbar/Navbar.scss";
+import { useNavigate } from "react-router-dom";
+import "./Navbar.scss";
 import logo from "../../assets/logo.jpeg";
 import { logout } from "../../utils/fetch";
 
 const Navbar = ({ user, setUser, avatar }) => {
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await logout(user.authToken);
       setUser(null);
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -25,12 +27,11 @@ const Navbar = ({ user, setUser, avatar }) => {
         <div className="nav-links">
           {user ? (
             <>
+              <Link to={`/explorer`} className="nav-link">
+                Explore
+              </Link>
               <Link to={`/profile/${user.username}`} className="nav-link">
-                {avatar ? (
-                  <img src={avatar} alt="User avatar" className="avatar" />
-                ) : (
-                  "Profile"
-                )}
+                {avatar ? <img src={avatar} alt="User avatar" className="avatar" /> : "Profile"}
               </Link>
               <button onClick={handleLogout} className="nav-link logout">
                 Logout
