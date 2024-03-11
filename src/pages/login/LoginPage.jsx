@@ -9,7 +9,6 @@ const LoginPage = ({ setUser }) => {
     emailOrUsername: "",
     password: "",
   });
-
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
@@ -26,11 +25,12 @@ const LoginPage = ({ setUser }) => {
         username: !userData.emailOrUsername.includes("@") ? userData.emailOrUsername : undefined,
         password: userData.password,
       });
+      console.log(response);
       setUser(response.user);
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error(error);
-      setErrorMessage(error.response.data.message);
+      setErrorMessage(error.message);
     }
   };
 
