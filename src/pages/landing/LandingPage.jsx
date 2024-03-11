@@ -1,8 +1,18 @@
-// src/pages/landing/LandingPage.jsx
-import SignupPage from "../signup/SignupPage";
-import "./LandingPage.scss";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const LandingPage = ({user, setUser}) => {
+import "./LandingPage.scss";
+import SignupPage from "../signup/SignupPage";
+
+const LandingPage = ({ user, setUser }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
   return (
     <div className="landing-page">
       <div className="container">
@@ -21,11 +31,16 @@ const LandingPage = ({user, setUser}) => {
           </p>
         </div>
         <div className="slides slide3">
-          <SignupPage setUser={setUser}/>
+          <SignupPage setUser={setUser} />
         </div>
       </div>
     </div>
   );
+};
+
+LandingPage.propTypes = {
+  user: PropTypes.object,
+  setUser: PropTypes.func,
 };
 
 export default LandingPage;
