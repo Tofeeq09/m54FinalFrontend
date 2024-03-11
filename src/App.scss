@@ -45,52 +45,59 @@ a {
 
 .landing-page {
   height: 100vh;
-  background: linear-gradient(to right, #667eea, #764ba2);
+  background: linear-gradient(to right, #2d4d44, #d4cadf);
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #fff;
+  .full-width-image {
+    background-image: url("../4.png");
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+  }
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #ddd;
+  }
+}
+
+.modal-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.modal {
+  width: 300px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  &-content {
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: #ddd;
-    }
-  }
-
-  .modal-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .modal {
-    width: 300px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-    &-content {
-      position: relative;
-    }
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      font-size: 20px;
-    }
+    font-size: 20px;
   }
 }
 
