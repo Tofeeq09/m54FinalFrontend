@@ -94,7 +94,7 @@ const Dashboard = ({ user }) => {
             </h2>
           </div>
         </div>
-        <h2>Topics</h2>
+        <h2 className="title">Topics</h2>
         <div className="topics">
           {topics.map((topic, index) => (
             <TopicCard key={index} topic={topic} />
