@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.scss";
+
 import logo from "../../assets/logo.jpeg";
 import { logout } from "../../utils/fetch";
 

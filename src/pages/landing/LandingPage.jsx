@@ -1,3 +1,5 @@
+// src/pages/landing/LandingPage.jsx
+
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +15,7 @@ const LandingPage = ({ user, setUser }) => {
       navigate("/home");
     }
   }, [user, navigate]);
+
   return (
     <div className="landing-page">
       <div className="container">
@@ -25,9 +28,9 @@ const LandingPage = ({ user, setUser }) => {
             by feelings of isolation and a lack of meaningful social
             interactions. Squads provides a platform for individuals to combat
             loneliness by connecting with like-minded peers, fostering
-            friendships, and supporting each other through life's challenges.
-            Join Squads today to prioritize your mental health and build lasting
-            relationships in a supportive community.
+            friendships, and supporting each other through life&apos;s
+            challenges. Join Squads today to prioritize your mental health and
+            build lasting relationships in a supportive community.
           </p>
         </div>
         <div className="slides slide3">
