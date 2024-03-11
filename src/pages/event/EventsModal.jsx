@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import EventForm from "./EventForm";
-import OldEventsList from "./OldEventsList";
+import Modal from "react-modal";
+import EventForm from "../../components/models/EventForm";
+import OldEventsList from "../../components/models/OldEventsList";
+
+import "./../../components/models/EventForm.scss";
 
 const EventsModal = () => {
   const [showModal, setShowModal] = useState(false);
@@ -34,19 +37,21 @@ const EventsModal = () => {
   return (
     <div>
       <button onClick={openModal}>Add New Event</button>
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>
-              &times;
-            </span>
-            <h2>Add New Event</h2>
-            <EventForm />
-            <h2>Old Events</h2>
-            <OldEventsList events={sampleEvents} />
-          </div>
+      <Modal
+        isOpen={showModal}
+        onRequestClose={closeModal}
+        className="modal"
+        overlayClassName="modal-overlay"
+      >
+        <div className="modal-content">
+          <span className="close" onClick={closeModal}>
+            &times;
+          </span>
+          <h2>Add New Event</h2>
+          <EventForm onClose={closeModal} /> <h2>Old Events</h2>
+          <OldEventsList events={sampleEvents} />
         </div>
-      )}
+      </Modal>
     </div>
   );
 };
