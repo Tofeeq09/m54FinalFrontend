@@ -5,7 +5,7 @@ import "./Navbar.scss";
 import logo from "../../assets/logo.jpeg";
 import { logout } from "../../utils/fetch";
 
-const Navbar = ({ user, setUser }) => {
+const Navbar = ({ user, setUser, avatar }) => {
   const handleLogout = async () => {
     try {
       await logout(user.authToken);
@@ -26,7 +26,7 @@ const Navbar = ({ user, setUser }) => {
           {user ? (
             <>
               <Link to={`/profile/${user.username}`} className="nav-link">
-                Profile
+                {avatar ? <img src={avatar} alt="User avatar" className="avatar" /> : "Profile"}
               </Link>
               <button onClick={handleLogout} className="nav-link logout">
                 Logout
@@ -51,6 +51,7 @@ const Navbar = ({ user, setUser }) => {
 Navbar.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
+  avatar: PropTypes.string,
 };
 
 export default Navbar;
