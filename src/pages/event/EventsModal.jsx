@@ -17,15 +17,15 @@ const EventsModal = () => {
   const sampleEvents = [
     {
       id: 1,
-      name: "Sample Event 1",
-      description: "Description for Sample Event 1",
+      name: "Online Events",
+      description: "Terminator Screening",
       date: "2024-03-12",
       time: "10:00 AM",
     },
     {
       id: 2,
-      name: "Sample Event 2",
-      description: "Description for Sample Event 2",
+      name: "In person Events",
+      description: "Country walk meetup",
       date: "2024-03-15",
       time: "2:00 PM",
     },
@@ -33,7 +33,7 @@ const EventsModal = () => {
 
   return (
     <div>
-      <button onClick={openModal}>Add Event</button>
+      <button onClick={openModal}>Add New Event</button>
       {showModal && (
         <div className="modal">
           <div className="modal-content">
