@@ -62,6 +62,7 @@ const Dashboard = ({ user }) => {
   return (
     <div className="dashboard">
       {user && <h1>Hello, {user.username}!</h1>}
+      <h1>{user && <h1>Hello, {user.username}!</h1>}</h1>
       <div className="dashboard-content">
         <div className="lists">
           <div className="friend-list">
