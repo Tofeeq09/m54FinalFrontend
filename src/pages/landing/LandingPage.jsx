@@ -1,5 +1,3 @@
-// src/pages/landing/LandingPage.jsx
-
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +13,6 @@ const LandingPage = ({ user, setUser }) => {
       navigate("/home");
     }
   }, [user, navigate]);
-
   return (
     <div className="landing-page">
       <div className="container">

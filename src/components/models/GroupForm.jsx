@@ -3,17 +3,51 @@ import Modal from "react-modal";
 import PropTypes from "prop-types";
 
 import "./GroupForm.scss";
+import { createGroup } from "../../utils/fetch";
 
-const GroupForm = ({ isOpen, onClose }) => {
-  const [groupData, setGroupData] = useState(null);
+const GroupForm = ({ isOpen, onClose, token }) => {
+  const [groupData, setGroupData] = useState({
+    name: "",
+    description: "",
+    topics: [],
+    privacy_settings: "",
+  });
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const response = await createGroup(groupData, token);
+      if (response.success) {
+        console.log(response.group);
+        setErrorMessage(null);
+      } else {
+        setErrorMessage(response.message);
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   const handleChange = (e) => {
-    setGroupData(e.target.value);
+    if (e.target.type === "checkbox") {
+      if (e.target.checked) {
+        setGroupData((prevState) => ({
+          ...prevState,
+          topics: [...prevState.topics, e.target.value],
+        }));
+      } else {
+        setGroupData((prevState) => ({
+          ...prevState,
+          topics: prevState.topics.filter((topic) => topic !== e.target.value),
+        }));
+      }
+    } else {
+      setGroupData((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
   };
 
   return (
@@ -77,6 +111,7 @@ const GroupForm = ({ isOpen, onClose }) => {
 GroupForm.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  token: PropTypes.string,
 };
 
 export default GroupForm;

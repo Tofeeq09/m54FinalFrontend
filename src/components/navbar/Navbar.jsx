@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-
 import "./Navbar.scss";
 import logo from "../../assets/logo.jpeg";
 import { logout } from "../../utils/fetch";
