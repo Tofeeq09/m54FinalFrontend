@@ -1,13 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.scss";
-
 import logo from "../../assets/logo.jpeg";
 import { logout } from "../../utils/fetch";
 
 const Navbar = ({ user, setUser, avatar }) => {
   const navigate = useNavigate();
-
   const handleLogout = async () => {
     try {
       await logout(user.authToken);
@@ -29,7 +28,7 @@ const Navbar = ({ user, setUser, avatar }) => {
           {user ? (
             <>
               <Link to={`/explorer`} className="nav-link">
-                Explorer
+                Explore
               </Link>
               <Link to={`/profile/${user.username}`} className="nav-link">
                 {avatar ? <img src={avatar} alt="User avatar" className="avatar" /> : "Profile"}
