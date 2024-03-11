@@ -9,8 +9,8 @@ const Navbar = ({ user, setUser, avatar }) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      await logout(user.authToken);
-      setUser(null);
+      await logout(user?.authToken);
+      setUser?.(null);
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -30,7 +30,7 @@ const Navbar = ({ user, setUser, avatar }) => {
               <Link to={`/explorer`} className="nav-link">
                 Explore
               </Link>
-              <Link to={`/profile/${user.username}`} className="nav-link">
+              <Link to={`/profile/${user?.username}`} className="nav-link">
                 {avatar ? <img src={avatar} alt="User avatar" className="avatar" /> : "Profile"}
               </Link>
               <button onClick={handleLogout} className="nav-link logout">

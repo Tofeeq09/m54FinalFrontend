@@ -1,45 +1,29 @@
 // src/components/cards/UserCard.jsx
 
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import "./UserCard.css";
+import "./UserCard.scss";
 
-const UserCard = ({ id, profileImage, groups, events }) => {
+const UserCard = ({ user, role, onKick }) => {
   return (
-    <div className="user-card-container">
-      <Link to={`/user/${id}`}>
-        <div className="user-profile-image">
-          <img src={profileImage} alt="Profile" />
-        </div>
-      </Link>
-      <div className="user-details">
-        <h3>User ID: {id}</h3>
-        <div className="user-groups">
-          <h4>Groups:</h4>
-          <ul>
-            {groups.map((group, index) => (
-              <li key={index}>{group}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="user-events">
-          <h4>Events:</h4>
-          <ul>
-            {events.map((event, index) => (
-              <li key={index}>{event}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
+    <div className="user-card">
+      <img src={user?.avatar} alt={user?.username} />
+      <h2>{user?.username}</h2>
+      <p>{user?.online ? "Online" : "Offline"}</p>
+      <p>Role: {role}</p>
+      {onKick && <button onClick={() => onKick(user.id)}>Kick</button>}
     </div>
   );
 };
 
 UserCard.propTypes = {
-  id: PropTypes.string.isRequired,
-  profileImage: PropTypes.string.isRequired,
-  groups: PropTypes.arrayOf(PropTypes.string).isRequired,
-  events: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
+    online: PropTypes.bool,
+  }).isRequired,
+  role: PropTypes.string,
+  onKick: PropTypes.func,
 };
 
 export default UserCard;

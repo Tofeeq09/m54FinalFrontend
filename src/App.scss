@@ -18,7 +18,7 @@ a {
   transition: color 0.3s ease; /* Smooth color transition */
 
   &:hover {
-    color: #ff66ad; /* Change color on hover */
+    color: #ff66ad;
   }
 }
 
@@ -41,7 +41,6 @@ a {
   padding: 20px;
   width: 300px;
 }
-// Other global styles...
 
 .landing-page {
   height: 100vh;
@@ -100,5 +99,3 @@ button {
     font-size: 20px;
   }
 }
-
-// Other global styles...

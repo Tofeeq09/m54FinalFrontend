@@ -1,24 +1,55 @@
 // src/components/cards/EventCard.jsx
 
 import PropTypes from "prop-types";
-
+import { useState } from "react";
+import Modal from "react-modal";
 import "./EventCard.scss";
 
 const EventCard = ({ event, onClick }) => {
-  const createdAt = new Date(event.createdAt);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!event) {
+    return null;
+  }
+
+  const { id, name, description, location, date, time, createdAt, Group, attendeeCount, Users } = event;
+  const createdDate = new Date(createdAt);
+
+  const toggleModal = (event) => {
+    event.stopPropagation();
+    setIsModalOpen((prevState) => !prevState);
+  };
 
   return (
     <div className="event-card" onClick={onClick}>
-      <h2>{event.name}</h2>
-      <p>{event.description}</p>
-      <p>Location: {event.location}</p>
-      <p>Date: {event.date}</p>
-      <p>Time: {event.time}</p>
+      <h2>
+        #{id} {name}
+      </h2>
+      <p>{description}</p>
+      <p>Location: {location}</p>
+      <p>Date: {date}</p>
+      <p>Time: {time}</p>
       <p>
-        Created At: {createdAt.toLocaleDateString()} {createdAt.toLocaleTimeString()}
+        Created At: {createdDate?.toLocaleDateString()} {createdDate?.toLocaleTimeString()}
       </p>
-      <p>Group: {event.Group.name}</p>
-      <p>Attendee Count: {event.attendeeCount}</p>
+      <p>Group: {Group?.name}</p>
+      <p>Attendee Count: {attendeeCount}</p>
+      <button onClick={toggleModal}>View Attendees</button>
+
+      <Modal isOpen={isModalOpen} onRequestClose={toggleModal} contentLabel="Attendees">
+        <h2>Attendees</h2>
+        {Users &&
+          Users.map(
+            (user) =>
+              user?.id && (
+                <div key={user.id}>
+                  <p>{user.username}</p>
+                  <img src={user.avatar} alt={user.username} />
+                </div>
+              )
+          )}
+        <button onClick={toggleModal}>Close</button>
+      </Modal>
     </div>
   );
 };

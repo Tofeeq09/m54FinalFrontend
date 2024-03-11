@@ -7,10 +7,10 @@ import "./GroupCard.scss";
 const GroupCard = ({ group, onClick }) => {
   return (
     <div onClick={onClick} className="group-card">
-      <h2>{group.name}</h2>
-      <p>{group.description}</p>
-      <p>Topics: {group.topics.join(", ")}</p>
-      <p>Privacy: {group.privacy_settings}</p>
+      <h2>{group?.name}</h2>
+      <p>{group?.description}</p>
+      <p>Topics: {group?.topics?.join(", ")}</p>
+      <p>Privacy: {group?.privacy_settings}</p>
     </div>
   );
 };

@@ -538,32 +538,31 @@ export const adminDeleteEvent = async (eventId, groupId, token) => {
   return data;
 };
 
-export const createPost = async (postData, groupId, token) => {
+export const createPost = async (newPost, groupId, authToken) => {
   const response = await fetch(`${url}/api/posts/group/${groupId}`, {
     method: "POST",
-    mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${authToken}`,
     },
-    body: JSON.stringify(postData),
+    body: JSON.stringify({ content: newPost }),
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
-    throw new Error(data.error);
+    throw new Error("Failed to create post");
   }
 
+  const data = await response.json();
   return data;
 };
 
-export const getGroupPosts = async (groupId) => {
+export const getGroupPosts = async (groupId, token) => {
   const response = await fetch(`${url}/api/posts/group/${groupId}`, {
     method: "GET",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
