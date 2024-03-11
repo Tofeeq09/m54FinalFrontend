@@ -25,9 +25,8 @@ const LandingPage = ({ user, setUser }) => {
         <div className="slides slide2">
           <p>
             🚀 Join Squads Now! 🚀 <br />
-            Connect with fellow coders, collaborate on
-            projects, and discover coding events in your area. Don't miss
-            out—join Squads today!
+            Connect with fellow coders, collaborate on projects, and discover coding events in your area. Don&apos;t
+            miss out—join Squads today!
           </p>
         </div>
         <div className="slides slide3">

@@ -61,6 +61,7 @@ const Dashboard = ({ user }) => {
 
   return (
     <div className="dashboard">
+      {user && <h1>Hello, {user.username}!</h1>}
       <h1>{user && <h1>Hello, {user.username}!</h1>}</h1>
       <div className="dashboard-content">
         <div className="lists">
@@ -77,17 +78,12 @@ const Dashboard = ({ user }) => {
             <h2>
               <details>
                 <summary className="title">
-                  Your Groups{" "}
-                  <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
+                  Your Groups <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
                 </summary>
                 {groupErr && <p>{groupErr}</p>}
                 <div className="group-content">
                   {groups.map((group) => (
-                    <GroupCard
-                      key={group.id}
-                      group={group}
-                      onClick={() => navigate(`/group/${group.id}`)}
-                    />
+                    <GroupCard key={group.id} group={group} onClick={() => navigate(`/group/${group.id}`)} />
                   ))}
                 </div>
               </details>
@@ -107,11 +103,7 @@ const Dashboard = ({ user }) => {
             {eventErr && <p>{eventErr}</p>}
             {events &&
               events.upcomingEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  onClick={() => navigate(`/event/${event.id}`)}
-                />
+                <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
               ))}
           </details>
 
@@ -120,19 +112,12 @@ const Dashboard = ({ user }) => {
             {eventErr && <p>{eventErr}</p>}
             {events &&
               events.pastEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  onClick={() => navigate(`/event/${event.id}`)}
-                />
+                <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
               ))}
           </details>
         </div>
       </div>
-      <GroupForm
-        isOpen={isAddGroupModalOpen}
-        onClose={() => setIsAddGroupModalOpen(false)}
-      />
+      <GroupForm isOpen={isAddGroupModalOpen} onClose={() => setIsAddGroupModalOpen(false)} token={user?.authToken} />
     </div>
   );
 };
