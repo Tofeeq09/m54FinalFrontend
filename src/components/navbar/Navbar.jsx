@@ -1,26 +1,57 @@
 import { Link } from "react-router-dom";
-import React from "react";
-import logo from "./logo.jpeg"; // Adjust the path to match the location of logo.jpeg
+import PropTypes from "prop-types";
 
 import "./Navbar.scss";
+import logo from "../../assets/logo.jpeg";
+import { logout } from "../../utils/fetch";
 
-const Navbar = () => {
+const Navbar = ({ user, setUser, avatar }) => {
+  const handleLogout = async () => {
+    try {
+      await logout(user.authToken);
+      setUser(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <nav className="navbar">
-      <div className="logo-container">
-        <img src={logo} alt="Logo" className="logo" />
+      <div className="nav-container">
+        <Link to={user ? "/home" : "/"} className="logo-container">
+          <img src={logo} alt="Logo" className="logo" />
+        </Link>
+
+        <div className="nav-links">
+          {user ? (
+            <>
+              <Link to={`/profile/${user.username}`} className="nav-link">
+                {avatar ? <img src={avatar} alt="User avatar" className="avatar" /> : "Profile"}
+              </Link>
+              <button onClick={handleLogout} className="nav-link logout">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+              <Link to="/signup" className="nav-link">
+                Signup
+              </Link>
+            </>
+          )}
+        </div>
       </div>
-      <Link to="/" className="homepage">
-        Homepage
-      </Link>
-      <Link to="/Login" className="nav-link">
-        Login
-      </Link>
-      <Link to="/Signup" className="nav-link">
-        Signup
-      </Link>
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  user: PropTypes.object,
+  setUser: PropTypes.func,
+  avatar: PropTypes.string,
 };
 
 export default Navbar;
