@@ -21,7 +21,10 @@ function App() {
     <>
       <Navbar user={user} setUser={setUser} avatar={user?.avatar} />
       <Routes>
-        <Route path="/" element={<LandingPage user={user} />} />
+        <Route
+          path="/"
+          element={<LandingPage user={user} setUser={setUser} />}
+        />
         <Route path="/home" element={<Dashboard user={user} />} />
         <Route path="/signup" element={<SignupPage setUser={setUser} />} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
