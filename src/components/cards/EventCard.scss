@@ -1,0 +1,21 @@
+.event-card {
+  background-color: rgb(0, 139, 139);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.event-card:hover {
+  background-color: rgb(56, 186, 186);
+}
+
+.event-card h2 {
+  margin-top: 0;
+  color: white;
+}
+
+.event-card p {
+  color: white;
+  margin-bottom: 0;
+  margin: 5px 0;
+}
