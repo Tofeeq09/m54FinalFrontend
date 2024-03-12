@@ -1,4 +1,4 @@
-// src/common
+// src/common/index.js
 
 export const writeCookie = (key, value, days) => {
   // keys = name of cookie
