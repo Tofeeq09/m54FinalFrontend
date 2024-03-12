@@ -1,10 +1,11 @@
 // src/pages/group/GroupPage.jsx
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./GroupPage.scss";
 import {
@@ -32,12 +33,6 @@ const GroupPage = ({ user }) => {
   const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
   const [newPost, setNewPost] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
 
   useEffect(() => {
     const fetchGroupAndUsersAndEventsAndPosts = async () => {
@@ -82,14 +77,22 @@ const GroupPage = ({ user }) => {
   };
 
   const handleJoinGroup = async () => {
+    if (!user) {
+      toast.error(
+        <div>
+          You need to log in to join the group.
+          <button onClick={() => navigate("/login")}>Click here to log in.</button>
+        </div>
+      );
+      return;
+    }
+
     try {
       const data = await joinGroup(groupId, user.authToken);
-      // Handle successful group joining
       if (data) {
         setUsers((prevUsers) => [...prevUsers, { ...user, GroupUser: { role: "member" } }]);
       }
     } catch (error) {
-      // Handle error
       console.error(error);
     }
   };
@@ -154,7 +157,7 @@ const GroupPage = ({ user }) => {
             <UserCard
               key={user.id}
               user={user}
-              role={user.GroupUser.role} // pass the role prop here
+              role={user.GroupUser.role}
               onKick={currentUserRole === "admin" && user.id !== currentUser.id ? handleKickUser : null}
               onClick={() => navigate(`/profile/${user.id}`)}
             />

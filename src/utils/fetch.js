@@ -178,7 +178,7 @@ export const getUserGroups = async (userId) => {
 
 export const joinGroup = async (groupId, token) => {
   const response = await fetch(`${url}/api/users/group/${groupId}`, {
-    method: "PUT",
+    method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
