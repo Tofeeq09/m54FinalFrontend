@@ -19,7 +19,7 @@ export const login = async (userData) => {
   });
 
   const data = await response.json();
-  writeCookie("jwt_Token", data.user.authToken, 7);
+  writeCookie("jwt_token", data.user.authToken, 7);
 
   if (!response.ok) {
     throw new Error(data.error);
