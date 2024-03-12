@@ -1,9 +1,13 @@
 // src/App.jsx
 
 import "./App.scss";
+
+import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import "./App.scss";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
-import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/landing/LandingPage";
 import SignupPage from "./pages/signup/SignupPage";
 import LoginPage from "./pages/login/LoginPage";
@@ -12,11 +16,27 @@ import Profile from "./pages/profile/Profile";
 import GroupPage from "./pages/group/GroupPage";
 import EventPage from "./pages/event/EventPage";
 import Explorer from "./pages/explorer/Explorer";
-
-import { useState } from "react";
+import { tokenCheck } from "./utils/fetch";
+import { getCookie } from "./common";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    let cookie = getCookie("jwt_token");
+    console.log(cookie);
+
+    if (cookie !== false) {
+      persistentLogin(cookie);
+    }
+  }, []);
+
+  const persistentLogin = async (cookie) => {
+    let user = await tokenCheck(cookie);
+    console.log(user);
+    setUser(user);
+  };
+
   return (
     <>
       <Navbar user={user} setUser={setUser} avatar={user?.avatar} />

@@ -18,11 +18,12 @@ const Dashboard = ({ user }) => {
   const [eventErr, setEventErr] = useState(null);
   const [topics, setTopics] = useState([]);
   const [isAddGroupModalOpen, setIsAddGroupModalOpen] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
+      console.log(`console.log(user):`);
+      console.log(user);
       const fetchGroups = async () => {
         try {
           const data = await getUserGroups(user?.id);
