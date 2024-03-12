@@ -11,6 +11,8 @@ import GroupForm from "../../components/models/GroupForm";
 import EventCard from "../../components/cards/EventCard";
 import TopicCard from "../../components/cards/TopicCard";
 
+const key = import.meta.env.RAWG_KEY;
+
 const Dashboard = ({ user, token }) => {
   const [groups, setGroups] = useState([]);
   const [groupErr, setGroupErr] = useState(null);
@@ -56,6 +58,14 @@ const Dashboard = ({ user, token }) => {
       navigate("/");
     }
   }, [user, navigate]);
+
+  // const fetchGameData = async (gameName) => {
+  //   const response = await fetch(`https://api.rawg.io/api/games?key=${import.meta.env.RAWG_KEY}&search=${gameName}`);
+  //   const data = await response.json();
+  //   return data.results;
+  // };
+  // ! API!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // *! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   const handleGroupCreated = (newGroup) => {
     setGroups((prevGroups) => [...prevGroups, newGroup]);

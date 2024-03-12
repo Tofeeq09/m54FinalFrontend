@@ -3,7 +3,7 @@
 import PropTypes from "prop-types";
 
 const PostCard = ({ post }) => {
-  if (!post || !post.User || !post.User.avatar) {
+  if (!post || !post.User) {
     return null;
   }
 
