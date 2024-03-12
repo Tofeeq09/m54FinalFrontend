@@ -154,6 +154,9 @@ const GroupPage = ({ user }) => {
             Disband Group
           </button>
         )}
+        {currentUserRole === "member" && (
+          <button className="disband-button" onClick={handleLeaveGroup}>Leave Group</button>
+        )}
       </div>
       <p>{group?.description ?? "N/A"}</p>
       <p>Topics: {group?.topics?.join(", ") ?? "N/A"}</p>
@@ -163,9 +166,6 @@ const GroupPage = ({ user }) => {
         {group?.createdAt ? new Date(group.createdAt).toLocaleString() : "N/A"}
       </p>
       {!currentUser && <button onClick={handleJoinGroup}>Join Group</button>}
-      {currentUserRole === "member" && (
-        <button onClick={handleLeaveGroup}>Leave Group</button>
-      )}
 
       <h2>Members</h2>
       <div className="members-positioning">
