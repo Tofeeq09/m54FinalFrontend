@@ -1,5 +1,7 @@
 // src/utils/fetch.js
 
+import { writeCookie } from "../common";
+
 const url = import.meta.env.VITE_APP_BASE_URL;
 
 export const login = async (userData) => {
@@ -17,6 +19,7 @@ export const login = async (userData) => {
   });
 
   const data = await response.json();
+  writeCookie("jwt_Token", data.user.authToken, 7);
 
   if (!response.ok) {
     throw new Error(data.error);
@@ -45,6 +48,7 @@ export const signup = async (userData) => {
 };
 
 export const tokenCheck = async (token) => {
+  console.log(token);
   const response = await fetch(`${url}/api/users/verify`, {
     method: "GET",
     mode: "cors",
@@ -59,8 +63,10 @@ export const tokenCheck = async (token) => {
   if (!response.ok) {
     throw new Error(data.error);
   }
+  console.log(`tokenCheck:`);
+  console.log(data);
 
-  return data;
+  return data.user;
 };
 
 export const getAllUsers = async (username = "") => {

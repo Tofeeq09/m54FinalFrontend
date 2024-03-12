@@ -25,6 +25,7 @@ const LoginPage = ({ setUser }) => {
         username: !userData.emailOrUsername.includes("@") ? userData.emailOrUsername : undefined,
         password: userData.password,
       });
+      console.log(`console.log(response):`);
       console.log(response);
       setUser(response.user);
       navigate("/home");

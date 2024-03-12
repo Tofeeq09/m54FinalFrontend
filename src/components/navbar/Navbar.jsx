@@ -11,6 +11,7 @@ const Navbar = ({ user, setUser, avatar }) => {
     try {
       await logout(user?.authToken);
       setUser?.(null);
+      document.cookie = "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       navigate("/");
     } catch (error) {
       console.error(error);
