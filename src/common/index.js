@@ -10,8 +10,7 @@ export const writeCookie = (key, value, days) => {
 
   date.setDate(date.getDate() + days);
 
-  let cookie = (document.cookie = key + "=" + value + "; expires=" + date.toGMTString() + "; path=/");
-  console.log(cookie);
+  document.cookie = key + "=" + value + "; expires=" + date.toGMTString() + "; path=/";
 };
 
 export const getCookie = (cookieName) => {

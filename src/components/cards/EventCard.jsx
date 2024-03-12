@@ -15,13 +15,17 @@ const EventCard = ({ event, onClick }) => {
   const { id, name, description, location, date, time, createdAt, Group, attendeeCount, Users } = event;
   const createdDate = new Date(createdAt);
 
+  const eventDate = new Date(date);
+  const today = new Date();
+  const isUpcoming = eventDate >= today;
+
   const toggleModal = (event) => {
     event.stopPropagation();
     setIsModalOpen((prevState) => !prevState);
   };
 
   return (
-    <div className="event-card" onClick={onClick}>
+    <div className={`event-card ${isUpcoming ? "upcoming" : "past"}`} onClick={onClick}>
       <h2>
         #{id} {name}
       </h2>

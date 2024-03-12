@@ -59,45 +59,35 @@ const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
         <div className="group-inputs">
           <label className="group-title">
             Group Name:
-            <input
-              type="text"
-              name="name"
-              onChange={handleChange}
-              className="input-field"
-            />
+            <input type="text" name="name" onChange={handleChange} className="input-field" />
           </label>
           <label className="group-title">
             Group Description:
-            <input
-              type="text"
-              name="description"
-              onChange={handleChange}
-              className="input-field"
-            />
+            <input type="text" name="description" onChange={handleChange} className="input-field" />
           </label>
         </div>
         <fieldset onChange={handleChange}>
           <legend className="group-title">Select Topics:</legend>
           <div className="group-checkboxes">
             <label>
-              <input type="checkbox" name="topics" value="topic1" />
-              Topic 1
+              <input type="checkbox" name="topics" value="Gaming" />
+              Gaming
             </label>
             <label>
-              <input type="checkbox" name="topics" value="topic2" />
-              Topic 2
+              <input type="checkbox" name="topics" value="Comics/Manga" />
+              Comics/Manga
             </label>
             <label>
-              <input type="checkbox" name="topics" value="topic3" />
-              Topic 3
+              <input type="checkbox" name="topics" value="Movies & TV" />
+              Movies & TV
             </label>
             <label>
-              <input type="checkbox" name="topics" value="topic4" />
-              Topic 4
+              <input type="checkbox" name="topics" value="Coding" />
+              Coding
             </label>
             <label>
-              <input type="checkbox" name="topics" value="topic5" />
-              Topic 5
+              <input type="checkbox" name="topics" value="TTRPG" />
+              TTRPG
             </label>
           </div>
         </fieldset>
