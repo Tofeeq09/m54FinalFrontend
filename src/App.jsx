@@ -21,15 +21,12 @@ function App() {
     <>
       <Navbar user={user} setUser={setUser} avatar={user?.avatar} />
       <Routes>
-        <Route
-          path="/"
-          element={<LandingPage user={user} setUser={setUser} />}
-        />
+        <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
         <Route path="/home" element={<Dashboard user={user} />} />
         <Route path="/signup" element={<SignupPage setUser={setUser} />} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
         <Route path="/group/:groupId" element={<GroupPage user={user} />} />
-        <Route path="/event/:eventId" element={<EventPage user={user} />} />
+        <Route path="/event/:eventId" element={<EventPage user1={user} />} />
         <Route path="/profile/:username" element={<Profile user={user} />} />
         <Route path="/explorer" element={<Explorer user={user} />} />
       </Routes>

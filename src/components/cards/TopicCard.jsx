@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const TopicCard = ({ topic }) => {
   return (
     <div className="topic-card">
-      <h3>{topic}</h3>
+      <h3>{topic || ""}</h3>
     </div>
   );
 };

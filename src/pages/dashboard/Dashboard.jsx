@@ -18,7 +18,6 @@ const Dashboard = ({ user }) => {
   const [eventErr, setEventErr] = useState(null);
   const [topics, setTopics] = useState([]);
   const [isAddGroupModalOpen, setIsAddGroupModalOpen] = useState(false);
-  // const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,8 +25,8 @@ const Dashboard = ({ user }) => {
     if (user) {
       const fetchGroups = async () => {
         try {
-          const data = await getUserGroups(user.id);
-          setGroups(data.groups);
+          const data = await getUserGroups(user?.id);
+          setGroups(data?.groups ?? []);
         } catch (error) {
           setGroupErr(error.message);
         }
@@ -35,8 +34,8 @@ const Dashboard = ({ user }) => {
 
       const fetchEvents = async () => {
         try {
-          const data = await getUserEvents(user.id);
-          setEvents(data);
+          const data = await getUserEvents(user?.id);
+          setEvents(data ?? { pastEvents: [], upcomingEvents: [] });
         } catch (error) {
           setEventErr(error.message);
         }
@@ -45,7 +44,7 @@ const Dashboard = ({ user }) => {
       const fetchTopics = async () => {
         try {
           const data = await validTopics();
-          setTopics(data);
+          setTopics(data ?? []);
         } catch (error) {
           console.error(error);
         }
@@ -59,9 +58,13 @@ const Dashboard = ({ user }) => {
     }
   }, [user, navigate]);
 
+  const handleGroupCreated = (newGroup) => {
+    setGroups((prevGroups) => [...prevGroups, newGroup]);
+  };
+
   return (
     <div className="dashboard">
-      <h1>{user && <h1>Hello, {user.username}!</h1>}</h1>
+      {user && <h1>Hello, {user?.username}!</h1>}
       <div className="dashboard-content">
         <div className="lists">
           <div className="friend-list">
@@ -82,7 +85,12 @@ const Dashboard = ({ user }) => {
                 {groupErr && <p>{groupErr}</p>}
                 <div className="group-content">
                   {groups.map((group) => (
-                    <GroupCard key={group.id} group={group} onClick={() => navigate(`/group/${group.id}`)} />
+                    <GroupCard
+                      key={group?.id}
+                      user={user}
+                      group={group}
+                      onClick={() => navigate(`/group/${group?.id}`)}
+                    />
                   ))}
                 </div>
               </details>
@@ -100,23 +108,27 @@ const Dashboard = ({ user }) => {
           <details>
             <summary className="title">Upcoming Events</summary>
             {eventErr && <p>{eventErr}</p>}
-            {events &&
-              events.upcomingEvents.map((event) => (
-                <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
-              ))}
+            {events?.upcomingEvents.map((event) => (
+              <EventCard key={event?.id} event={event} onClick={() => navigate(`/event/${event?.id}`)} />
+            ))}
           </details>
 
           <details>
             <summary className="title">Past Events</summary>
             {eventErr && <p>{eventErr}</p>}
-            {events &&
-              events.pastEvents.map((event) => (
-                <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
-              ))}
+            {events?.pastEvents.map((event) => (
+              <EventCard key={event?.id} event={event} onClick={() => navigate(`/event/${event?.id}`)} />
+            ))}
           </details>
         </div>
       </div>
-      <GroupForm isOpen={isAddGroupModalOpen} onClose={() => setIsAddGroupModalOpen(false)} token={user?.authToken} />
+
+      <GroupForm
+        isOpen={isAddGroupModalOpen}
+        onClose={() => setIsAddGroupModalOpen(false)}
+        token={user?.authToken}
+        onGroupCreated={handleGroupCreated}
+      />
     </div>
   );
 };

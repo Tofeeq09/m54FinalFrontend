@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./GroupForm.scss";
 import { createGroup } from "../../utils/fetch";
 
-const GroupForm = ({ isOpen, onClose, token }) => {
+const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
   const [groupData, setGroupData] = useState({
     name: "",
     description: "",
@@ -18,14 +18,16 @@ const GroupForm = ({ isOpen, onClose, token }) => {
     event.preventDefault();
     try {
       const response = await createGroup(groupData, token);
-      if (response.success) {
+      if (response?.success) {
         console.log(response.group);
         setErrorMessage(null);
+        onClose?.();
+        onGroupCreated?.(response.group);
       } else {
-        setErrorMessage(response.message);
+        setErrorMessage(response?.message);
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorMessage(error?.message);
     }
   };
 
@@ -112,6 +114,7 @@ GroupForm.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   token: PropTypes.string,
+  onGroupCreated: PropTypes.func,
 };
 
 export default GroupForm;
