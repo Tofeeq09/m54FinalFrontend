@@ -1,1 +1,52 @@
-// src/components/models/GroupForm.scss
+.button-positioning {
+  display: flex;
+  justify-content: space-around;
+}
+
+.close-button {
+  background-color: #da594d;
+  color: aliceblue;
+}
+
+.submit-button {
+  background-color: #35baba;
+  color: aliceblue;
+}
+
+.group-inputs {
+  padding-bottom: 1rem;
+}
+.input-field {
+  font-size: 20px;
+  padding: 0.5rem;
+}
+
+.group-checkboxes label {
+  display: inline-block;
+  width: 200px;
+  font-size: 18px;
+}
+
+.group-checkboxes input {
+  margin-right: 10px;
+}
+
+.group-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 3rem;
+  padding-right: 15rem;
+  padding-left: 15rem;
+
+}
+
+.group-form h2 {
+  font-size: 30px;
+}
