@@ -141,33 +141,53 @@ const GroupPage = ({ user }) => {
   };
 
   return (
-    <div className="group-page"> 
+    <div className="group-page">
       <h1>{group?.name ?? "N/A"}</h1>
       <p>{group?.description ?? "N/A"}</p>
       <p>Topics: {group?.topics?.join(", ") ?? "N/A"}</p>
       <p>Privacy: {group?.privacy_settings ?? "N/A"}</p>
-      <p>Created at: {group?.createdAt ? new Date(group.createdAt).toLocaleString() : "N/A"}</p>
+      <p>
+        Created at:{" "}
+        {group?.createdAt ? new Date(group.createdAt).toLocaleString() : "N/A"}
+      </p>
       {!currentUser && <button onClick={handleJoinGroup}>Join Group</button>}
-      {currentUserRole === "member" && <button onClick={handleLeaveGroup}>Leave Group</button>}
-      {currentUserRole === "admin" && <button onClick={handleDeleteGroup}>Disband Group</button>}
-      <h2>Members</h2>
-      {users?.map(
-        (user) =>
-          user && (
-            <UserCard
-              key={user.id}
-              user={user}
-              role={user.GroupUser.role}
-              onKick={currentUserRole === "admin" && user.id !== currentUser.id ? handleKickUser : null}
-              onClick={() => navigate(`/profile/${user.id}`)}
-            />
-          )
+      {currentUserRole === "member" && (
+        <button onClick={handleLeaveGroup}>Leave Group</button>
       )}
+      {currentUserRole === "admin" && (
+        <button onClick={handleDeleteGroup}>Disband Group</button>
+      )}
+      <h2>Members</h2>
+      <div className="members-positioning">
+        {users?.map(
+          (user) =>
+            user && (
+              <UserCard
+                key={user.id}
+                user={user}
+                role={user.GroupUser.role}
+                onKick={
+                  currentUserRole === "admin" && user.id !== currentUser.id
+                    ? handleKickUser
+                    : null
+                }
+                onClick={() => navigate(`/profile/${user.id}`)}
+              />
+            )
+        )}
+      </div>
       <h2>
         Events <FiPlus onClick={() => setIsAddEventModalOpen(true)} />
       </h2>
       {events?.map(
-        (event) => event && <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+        (event) =>
+          event && (
+            <EventCard
+              key={event.id}
+              event={event}
+              onClick={() => navigate(`/event/${event.id}`)}
+            />
+          )
       )}
       {currentUser ? (
         <>
