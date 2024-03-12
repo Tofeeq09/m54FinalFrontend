@@ -19,7 +19,7 @@ export const login = async (userData) => {
   });
 
   const data = await response.json();
-  writeCookie("jwt_token", data.user.authToken, 7);
+  writeCookie("jwt_token", data.user.authToken);
 
   if (!response.ok) {
     throw new Error(data.error);
@@ -48,7 +48,6 @@ export const signup = async (userData) => {
 };
 
 export const tokenCheck = async (token) => {
-  console.log(token);
   const response = await fetch(`${url}/api/users/verify`, {
     method: "GET",
     mode: "cors",
@@ -63,8 +62,6 @@ export const tokenCheck = async (token) => {
   if (!response.ok) {
     throw new Error(data.error);
   }
-  console.log(`tokenCheck:`);
-  console.log(data);
 
   return data.user;
 };
@@ -544,7 +541,7 @@ export const adminDeleteEvent = async (eventId, groupId, token) => {
   return data;
 };
 
-export const createPost = async (newPost, groupId, authToken) => {
+export const createGroupPost = async (newPost, groupId, authToken) => {
   const response = await fetch(`${url}/api/posts/group/${groupId}`, {
     method: "POST",
     headers: {
@@ -552,6 +549,24 @@ export const createPost = async (newPost, groupId, authToken) => {
       Authorization: `Bearer ${authToken}`,
     },
     body: JSON.stringify({ content: newPost }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create post");
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+export const createEventPost = async (newPost, groupId, eventId, authToken) => {
+  const response = await fetch(`${url}/api/posts/group/${groupId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: JSON.stringify({ content: newPost, eventId }),
   });
 
   if (!response.ok) {

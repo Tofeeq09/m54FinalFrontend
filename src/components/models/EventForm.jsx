@@ -20,7 +20,6 @@ const EventForm = ({ isOpen, onClose, token, groupId, onEventCreated }) => {
     try {
       const response = await createEvent(eventData, groupId, token);
       if (response?.success) {
-        console.log(response.event);
         setErrorMessage(null);
         onClose?.();
         onEventCreated?.(response.event);

@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignupPage.scss";
 import PropTypes from "prop-types";
 import { signup } from "../../utils/fetch";
 
-const SignupPage = ({ setUser }) => {
+const SignupPage = ({ user, setUser }) => {
   const [userData, setUserData] = useState({
     username: "",
     email: "",
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -67,6 +72,7 @@ const SignupPage = ({ setUser }) => {
 };
 
 SignupPage.propTypes = {
+  user: PropTypes.object,
   setUser: PropTypes.func.isRequired,
 };
 

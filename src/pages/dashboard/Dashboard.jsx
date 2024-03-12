@@ -11,7 +11,7 @@ import GroupForm from "../../components/models/GroupForm";
 import EventCard from "../../components/cards/EventCard";
 import TopicCard from "../../components/cards/TopicCard";
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, token }) => {
   const [groups, setGroups] = useState([]);
   const [groupErr, setGroupErr] = useState(null);
   const [events, setEvents] = useState({ pastEvents: [], upcomingEvents: [] });
@@ -22,8 +22,6 @@ const Dashboard = ({ user }) => {
 
   useEffect(() => {
     if (user) {
-      console.log(`console.log(user):`);
-      console.log(user);
       const fetchGroups = async () => {
         try {
           const data = await getUserGroups(user?.id);
@@ -127,7 +125,7 @@ const Dashboard = ({ user }) => {
       <GroupForm
         isOpen={isAddGroupModalOpen}
         onClose={() => setIsAddGroupModalOpen(false)}
-        token={user?.authToken}
+        token={token}
         onGroupCreated={handleGroupCreated}
       />
     </div>
@@ -136,6 +134,7 @@ const Dashboard = ({ user }) => {
 
 Dashboard.propTypes = {
   user: PropTypes.object,
+  token: PropTypes.string,
 };
 
 export default Dashboard;

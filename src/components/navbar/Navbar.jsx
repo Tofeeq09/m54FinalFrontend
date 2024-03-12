@@ -5,12 +5,12 @@ import "./Navbar.scss";
 import logo from "../../assets/logo.jpeg";
 import { logout } from "../../utils/fetch";
 
-const Navbar = ({ user, setUser, avatar }) => {
+const Navbar = ({ token, user, setUser, avatar }) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      await logout(user?.authToken);
-      setUser?.(null);
+      await logout(token);
+      setUser(null);
       document.cookie = "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       navigate("/");
     } catch (error) {
@@ -58,6 +58,7 @@ Navbar.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
   avatar: PropTypes.string,
+  token: PropTypes.string,
 };
 
 export default Navbar;
