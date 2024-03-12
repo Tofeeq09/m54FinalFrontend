@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 import "./GroupPage.scss";
 import {
@@ -141,7 +141,7 @@ const GroupPage = ({ user }) => {
   };
 
   return (
-    <div>
+    <div className="group-page"> 
       <h1>{group?.name ?? "N/A"}</h1>
       <p>{group?.description ?? "N/A"}</p>
       <p>Topics: {group?.topics?.join(", ") ?? "N/A"}</p>
