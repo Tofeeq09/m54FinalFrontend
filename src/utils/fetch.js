@@ -240,7 +240,7 @@ export const getUserEvents = async (userId) => {
 
 export const attendEvent = async (eventId, token) => {
   const response = await fetch(`${url}/api/users/event/${eventId}`, {
-    method: "PUT",
+    method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
