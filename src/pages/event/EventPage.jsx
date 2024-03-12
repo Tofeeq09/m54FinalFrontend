@@ -40,7 +40,8 @@ const EventPage = ({ user1, token }) => {
     try {
       const data = await attendEvent(eventId, token);
       if (data) {
-        setEvent((prevEvent) => ({ ...prevEvent, Users: [...prevEvent.Users, user1] }));
+        const userWithRole = { ...user1, EventUser: { role: "attendee" } };
+        setEvent((prevEvent) => ({ ...prevEvent, Users: [...prevEvent.Users, userWithRole] }));
       }
     } catch (error) {
       console.error(error);
@@ -104,7 +105,8 @@ const EventPage = ({ user1, token }) => {
   };
 
   const currentUserInEvent = event?.Users?.find((u) => user1 && u.id === user1.id);
-  const currentUserRoleInEvent = currentUserInEvent?.EventUser?.role;
+  const currentUserRoleInEvent =
+    currentUserInEvent && currentUserInEvent.EventUser ? currentUserInEvent.EventUser.role : null;
 
   return (
     <div>
@@ -123,8 +125,12 @@ const EventPage = ({ user1, token }) => {
       </p>
       <p>Location: {event.location}</p>
       {!currentUserInEvent && <button onClick={handleAttendEvent}>Attend Event</button>}
-      {currentUserRoleInEvent === "attendee" && <button onClick={handleCancelEvent}>Cancel Attendance</button>}
-      {currentUserRoleInEvent === "organizer" && <button onClick={handleDeleteEvent}>Delete Event</button>}
+      {currentUserInEvent && currentUserRoleInEvent === "attendee" && (
+        <button onClick={handleCancelEvent}>Cancel Attendance</button>
+      )}
+      {currentUserInEvent && currentUserRoleInEvent === "organizer" && (
+        <button onClick={handleDeleteEvent}>Delete Event</button>
+      )}
       {event.Group && (
         <>
           <h2>Group: {event.Group.name}</h2>
