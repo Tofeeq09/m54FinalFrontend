@@ -13,10 +13,16 @@ const UserCard = ({ user, role, onKick }) => {
           className="profile-picture"
         />
         <div className="user-card-text-block">
-          <h2>{user?.username}</h2>
+          <div className="kick-button-positioning">
+            <h2>{user?.username}</h2>{" "}
+            {onKick && (
+              <button className="kick-button" onClick={() => onKick(user.id)}>
+                Kick
+              </button>
+            )}
+          </div>
           <p>{user?.online ? "Online" : "Offline"}</p>
           <p>Role: {role}</p>
-          {onKick && <button onClick={() => onKick(user.id)}>Kick</button>}
         </div>
       </div>
     </div>
