@@ -141,7 +141,7 @@ const GroupPage = ({ user }) => {
   };
 
   return (
-    <div>
+    <div className="group-page"> 
       <h1>{group?.name ?? "N/A"}</h1>
       <p>{group?.description ?? "N/A"}</p>
       <p>Topics: {group?.topics?.join(", ") ?? "N/A"}</p>
