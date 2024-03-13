@@ -60,11 +60,21 @@ const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
         <div className="group-inputs">
           <label className="group-title">
             Group Name:
-            <input type="text" name="name" onChange={handleChange} className="input-field" />
+            <input
+              type="text"
+              name="name"
+              onChange={handleChange}
+              className="input-field"
+            />
           </label>
           <label className="group-title">
             Group Description:
-            <input type="text" name="description" onChange={handleChange} className="input-field" />
+            <input
+              type="text"
+              name="description"
+              onChange={handleChange}
+              className="input-field"
+            />
           </label>
         </div>
         <fieldset onChange={handleChange}>
@@ -104,15 +114,15 @@ const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
           </label>
         </fieldset>
         <div className="button-positioning">
-          <button type="submit" className="submit-button">
+          <button type="submit" className="positive-button">
             Create Group
+          </button>
+          <button onClick={onClose} className="negative-button">
+            Cancel
           </button>
         </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
-      <button onClick={onClose} className="close-button">
-        Cancel
-      </button>
     </Modal>
   );
 };

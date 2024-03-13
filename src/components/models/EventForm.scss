@@ -1,1 +1,5 @@
 // Path: src/components/models/EventForm.scss
+.event-form label {
+  display: block;
+  margin-bottom: 10px; /* Adjust spacing between labels */
+}

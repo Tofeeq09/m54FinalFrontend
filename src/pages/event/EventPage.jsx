@@ -137,7 +137,7 @@ const EventPage = ({ user1, token }) => {
       <div className="header-disband-positioning">
         <h1>{event.name}</h1>
         {!currentUserInEvent && (
-          <button onClick={handleAttendEvent}>Attend Event</button>
+          <button className="positive-button" onClick={handleAttendEvent}>Attend Event</button>
         )}
         {currentUserInEvent && currentUserRoleInEvent === "attendee" && (
           <button className="negative-button" onClick={handleCancelEvent}>

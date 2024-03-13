@@ -88,7 +88,7 @@ const Dashboard = ({ user, token }) => {
           <div className="friend-list">
             <details>
               <summary className="title">
-                Your Friends <FiPlus />
+                Your Friends <FiPlus className="plus-icon" />
               </summary>
               {friendErr && <p>{friendErr}</p>}
               <div className="friend-content">
@@ -107,7 +107,14 @@ const Dashboard = ({ user, token }) => {
               <details>
                 <summary className="title">
                   Your Groups{" "}
+<<<<<<< HEAD
                   <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
+=======
+                  <FiPlus
+                    className="plus-icon"
+                    onClick={() => setIsAddGroupModalOpen(true)}
+                  />
+>>>>>>> dc9ef67c55b551b80223ff77881e0ec922bcf89e
                 </summary>
                 {groupErr && <p>{groupErr}</p>}
                 <div className="group-content">
