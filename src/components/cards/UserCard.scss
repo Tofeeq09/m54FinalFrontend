@@ -28,3 +28,13 @@
 .user-card:hover .profile-picture {
   opacity: 100%;
 }
+
+.kick-button-positioning {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.kick-button{
+  padding:0.2rem;
+}
