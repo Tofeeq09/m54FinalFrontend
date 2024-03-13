@@ -1,3 +1,5 @@
+// Path: src/pages/signup/SignupPage.jsx
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignupPage.scss";

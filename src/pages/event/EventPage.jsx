@@ -1,4 +1,4 @@
-// EventPage.jsx
+// Path: src/pages/event/EventPage.jsx
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

@@ -1,4 +1,4 @@
-// src/App.jsx
+// Path: src/App.jsx
 
 import "./App.scss";
 

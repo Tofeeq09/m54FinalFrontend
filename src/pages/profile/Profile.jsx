@@ -1,4 +1,4 @@
-// src/pages/profile/Profile.jsx
+// Path: src/pages/profile/Profile.jsx
 
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";

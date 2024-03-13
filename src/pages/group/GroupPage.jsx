@@ -1,4 +1,4 @@
-// src/pages/group/GroupPage.jsx
+// Path: src/pages/group/GroupPage.jsx
 
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";

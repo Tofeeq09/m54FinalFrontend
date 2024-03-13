@@ -1,3 +1,5 @@
+// Path: src/components/navbar/Navbar.jsx
+
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";

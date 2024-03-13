@@ -1,3 +1,5 @@
+// Path: src/pages/login/LoginPage.jsx
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.scss";

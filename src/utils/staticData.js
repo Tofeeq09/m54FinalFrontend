@@ -1,4 +1,4 @@
-// src/utils/staticData.js
+// Path: src/utils/staticData.js
 
 const url = import.meta.env.VITE_APP_BASE_URL;
 

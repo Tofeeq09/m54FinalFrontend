@@ -1,4 +1,4 @@
-// src/components/cards/TopicCard.jsx
+// Path: src/pages/components/cards/TopicCard.jsx
 
 import PropTypes from "prop-types";
 

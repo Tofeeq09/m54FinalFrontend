@@ -1,4 +1,4 @@
-// src/utils/fetch.js
+// Path: src/utils/fetch.js
 
 import { writeCookie } from "../common";
 

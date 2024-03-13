@@ -1,3 +1,5 @@
+// Path: src/components/footer/Footer.jsx
+
 import "./Footer.scss";
 
 function Footer() {
