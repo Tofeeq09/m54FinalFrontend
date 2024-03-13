@@ -8,7 +8,13 @@ import { useNavigate } from "react-router-dom";
 import "./EventPage.scss";
 import UserCard from "../../components/cards/UserCard";
 import PostCard from "../../components/cards/PostCard";
-import { getEvent, attendEvent, cancelEventAttendance, deleteEvent, createEventPost } from "../../utils/fetch";
+import {
+  getEvent,
+  attendEvent,
+  cancelEventAttendance,
+  deleteEvent,
+  createEventPost,
+} from "../../utils/fetch";
 
 const EventPage = ({ user1, token }) => {
   // user1 is the logged in user
@@ -41,7 +47,10 @@ const EventPage = ({ user1, token }) => {
       const data = await attendEvent(eventId, token);
       if (data) {
         const userWithRole = { ...user1, EventUser: { role: "attendee" } };
-        setEvent((prevEvent) => ({ ...prevEvent, Users: [...prevEvent.Users, userWithRole] }));
+        setEvent((prevEvent) => ({
+          ...prevEvent,
+          Users: [...prevEvent.Users, userWithRole],
+        }));
       }
     } catch (error) {
       console.error(error);
@@ -52,7 +61,10 @@ const EventPage = ({ user1, token }) => {
     try {
       const data = await cancelEventAttendance(eventId, token);
       if (data) {
-        setEvent((prevEvent) => ({ ...prevEvent, Users: prevEvent.Users.filter((u) => u.id !== user1.id) }));
+        setEvent((prevEvent) => ({
+          ...prevEvent,
+          Users: prevEvent.Users.filter((u) => u.id !== user1.id),
+        }));
       }
     } catch (error) {
       console.error(error);
@@ -82,7 +94,12 @@ const EventPage = ({ user1, token }) => {
     }
 
     try {
-      const newPostData = await createEventPost(newPost, event.GroupId, eventId, token);
+      const newPostData = await createEventPost(
+        newPost,
+        event.GroupId,
+        eventId,
+        token
+      );
 
       const newPostWithUser = {
         ...newPostData.post,
@@ -93,7 +110,10 @@ const EventPage = ({ user1, token }) => {
         },
       };
 
-      setEvent((prevEvent) => ({ ...prevEvent, Posts: [...prevEvent.Posts, newPostWithUser] }));
+      setEvent((prevEvent) => ({
+        ...prevEvent,
+        Posts: [...prevEvent.Posts, newPostWithUser],
+      }));
       setNewPost("");
     } catch (error) {
       console.error(error);
@@ -104,9 +124,13 @@ const EventPage = ({ user1, token }) => {
     setNewPost(event.target.value);
   };
 
-  const currentUserInEvent = event?.Users?.find((u) => user1 && u.id === user1.id);
+  const currentUserInEvent = event?.Users?.find(
+    (u) => user1 && u.id === user1.id
+  );
   const currentUserRoleInEvent =
-    currentUserInEvent && currentUserInEvent.EventUser ? currentUserInEvent.EventUser.role : null;
+    currentUserInEvent && currentUserInEvent.EventUser
+      ? currentUserInEvent.EventUser.role
+      : null;
 
   return (
     <div className="group-page">
@@ -165,7 +189,11 @@ const EventPage = ({ user1, token }) => {
       ) : (
         event?.Posts?.map((post) => <PostCard key={post.id} post={post} />)
       )}
-      <form className="post-container" onSubmit={handleNewPostSubmit} placeholder="comment">
+      <form
+        className="post-container"
+        onSubmit={handleNewPostSubmit}
+        placeholder="comment"
+      >
         <input type="text" value={newPost} onChange={handleNewPostChange} />
         <button type="submit">Post</button>
       </form>

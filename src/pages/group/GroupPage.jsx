@@ -61,7 +61,7 @@ const GroupPage = ({ user, token }) => {
   const currentUserRole = currentUser?.GroupUser?.role;
 
   const handleEventCreated = (newEvent) => {
-    setEvents((prevEvents) => [...prevEvents, newEvent.event]);
+    setEvents((prevEvents) => [...prevEvents, newEvent]);
   };
 
   const handleLeaveGroup = async () => {

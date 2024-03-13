@@ -19,7 +19,7 @@ export const login = async (userData) => {
   });
 
   const data = await response.json();
-  console.log("JWT token received from server:", data.user.authToken);
+  // console.log("JWT token received from server:", data.user.authToken);
   writeCookie("jwt_token", data.user.authToken);
 
   if (!response.ok) {
@@ -40,7 +40,7 @@ export const signup = async (userData) => {
   });
 
   const data = await response.json();
-  console.log("JWT token received from server:", data.user.authToken);
+  // console.log("JWT token received from server:", data.user.authToken);
   writeCookie("jwt_token", data.user.authToken);
 
   if (!response.ok) {
@@ -59,7 +59,7 @@ export const tokenCheck = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log("JWT token sent for verification:", token);
+  // console.log("JWT token sent for verification:", token);
 
   const data = await response.json();
 
