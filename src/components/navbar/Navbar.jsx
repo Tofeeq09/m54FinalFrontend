@@ -13,7 +13,8 @@ const Navbar = ({ token, user, setUser, avatar }) => {
     try {
       await logout(token);
       setUser(null);
-      document.cookie = "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie =
+        "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -34,7 +35,11 @@ const Navbar = ({ token, user, setUser, avatar }) => {
                 Explore
               </Link>
               <Link to={`/profile/${user?.username}`} className="nav-link">
-                {avatar ? <img src={avatar} alt="User avatar" className="avatar" /> : "Profile"}
+                {avatar ? (
+                  <img src={avatar} alt="User avatar" className="avatar" />
+                ) : (
+                  "Profile"
+                )}
               </Link>
               <button onClick={handleLogout} className="nav-link logout">
                 Logout
