@@ -6,7 +6,11 @@ import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 import "./Dashboard.scss";
-import { getUserGroups, getUserEvents } from "../../utils/fetch";
+import {
+  getUserGroups,
+  getUserEvents,
+  getUserFriends,
+} from "../../utils/fetch";
 import { validTopics } from "../../utils/staticData";
 import GroupCard from "../../components/cards/GroupCard";
 import GroupForm from "../../components/models/GroupForm";
@@ -16,10 +20,13 @@ import TopicCard from "../../components/cards/TopicCard";
 const Dashboard = ({ user, token }) => {
   const [groups, setGroups] = useState([]);
   const [groupErr, setGroupErr] = useState(null);
+  const [isAddGroupModalOpen, setIsAddGroupModalOpen] = useState(false);
   const [events, setEvents] = useState({ pastEvents: [], upcomingEvents: [] });
   const [eventErr, setEventErr] = useState(null);
   const [topics, setTopics] = useState([]);
-  const [isAddGroupModalOpen, setIsAddGroupModalOpen] = useState(false);
+  const [friends, setFriends] = useState([]);
+  const [friendErr, setFriendErr] = useState(null);
+  const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,9 +58,19 @@ const Dashboard = ({ user, token }) => {
         }
       };
 
+      const fetchUserFriends = async () => {
+        try {
+          const data = await getUserFriends(user?.id);
+          setFriends(data ?? []);
+        } catch (error) {
+          setFriendErr(error.message);
+        }
+      };
+
       fetchGroups();
       fetchEvents();
       fetchTopics();
+      fetchUserFriends();
     } else {
       navigate("/");
     }
@@ -73,7 +90,15 @@ const Dashboard = ({ user, token }) => {
               <summary className="title">
                 Your Friends <FiPlus />
               </summary>
-              {/* Content goes here */}
+              {friendErr && <p>{friendErr}</p>}
+              <div className="friend-content">
+                {friends.map((friend) => (
+                  <div key={friend?.id} className="friend">
+                    <img src={friend?.avatar} alt="Friend avatar" />
+                    <p>{friend?.username}</p>
+                  </div>
+                ))}
+              </div>
             </details>
           </div>
 
@@ -81,7 +106,8 @@ const Dashboard = ({ user, token }) => {
             <h2>
               <details>
                 <summary className="title">
-                  Your Groups <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
+                  Your Groups{" "}
+                  <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
                 </summary>
                 {groupErr && <p>{groupErr}</p>}
                 <div className="group-content">
@@ -110,7 +136,11 @@ const Dashboard = ({ user, token }) => {
             <summary className="title">Upcoming Events</summary>
             {eventErr && <p>{eventErr}</p>}
             {events?.upcomingEvents.map((event) => (
-              <EventCard key={event?.id} event={event} onClick={() => navigate(`/event/${event?.id}`)} />
+              <EventCard
+                key={event?.id}
+                event={event}
+                onClick={() => navigate(`/event/${event?.id}`)}
+              />
             ))}
           </details>
 
@@ -118,7 +148,11 @@ const Dashboard = ({ user, token }) => {
             <summary className="title">Past Events</summary>
             {eventErr && <p>{eventErr}</p>}
             {events?.pastEvents.map((event) => (
-              <EventCard key={event?.id} event={event} onClick={() => navigate(`/event/${event?.id}`)} />
+              <EventCard
+                key={event?.id}
+                event={event}
+                onClick={() => navigate(`/event/${event?.id}`)}
+              />
             ))}
           </details>
         </div>

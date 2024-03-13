@@ -642,3 +642,60 @@ export const deletePost = async (postId, token) => {
 
   return data;
 };
+
+export const addFriend = async (userId, token) => {
+  const response = await fetch(`${url}/api/users/friend/${userId}`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const removeFriend = async (userId, token) => {
+  const response = await fetch(`${url}/api/users/friend/${userId}`, {
+    method: "DELETE",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const getUserFriends = async (token) => {
+  const response = await fetch(`${url}/api/users/friends`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
