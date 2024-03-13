@@ -30,23 +30,24 @@
   background-color: rgb(56, 186, 186);
 }
 
-.group-post-container {
+.post-container {
   display: flex;
   align-items: center;
 }
 
-.group-post-container input {
+.post-container input {
   padding: 0.5rem;
   width: 100%;
   margin-left: 1rem;
   font-size: 18px;
 }
 
-.group-post-container button {
+.post-container button {
   background-color: rgb(0, 139, 139);
+  color: white;
 }
 
-.group-post-container button:hover {
+.post-container button:hover {
   background-color: rgb(56, 186, 186);
 }
 
@@ -59,4 +60,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+
+.title-plus-align {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
