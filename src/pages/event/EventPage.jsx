@@ -165,7 +165,7 @@ const EventPage = ({ user1, token }) => {
       ) : (
         event?.Posts?.map((post) => <PostCard key={post.id} post={post} />)
       )}
-      <form className="post-container" onSubmit={handleNewPostSubmit}>
+      <form className="post-container" onSubmit={handleNewPostSubmit} placeholder="comment">
         <input type="text" value={newPost} onChange={handleNewPostChange} />
         <button type="submit">Post</button>
       </form>
