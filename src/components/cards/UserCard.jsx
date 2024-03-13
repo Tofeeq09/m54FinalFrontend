@@ -1,4 +1,4 @@
-// src/components/cards/UserCard.jsx
+// Path: src/pages/components/cards/UserCard.scss
 
 import PropTypes from "prop-types";
 import "./UserCard.scss";
@@ -7,11 +7,7 @@ const UserCard = ({ user, role, onKick }) => {
   return (
     <div className="user-card-positioning">
       <div className="user-card">
-        <img
-          src={user?.avatar}
-          alt={user?.username}
-          className="profile-picture"
-        />
+        <img src={user?.avatar} alt={user?.username} className="profile-picture" />
         <div className="user-card-text-block">
           <div className="kick-button-positioning">
             <h2>{user?.username}</h2>{" "}

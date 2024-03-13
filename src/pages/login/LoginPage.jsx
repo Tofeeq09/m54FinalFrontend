@@ -1,17 +1,24 @@
-import { useState } from "react";
+// Path: src/pages/login/LoginPage.jsx
+
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.scss";
 import PropTypes from "prop-types";
 import { login } from "../../utils/fetch";
 
-const LoginPage = ({ setUser }) => {
+const LoginPage = ({ user, setUser }) => {
   const [userData, setUserData] = useState({
     emailOrUsername: "",
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -25,8 +32,7 @@ const LoginPage = ({ setUser }) => {
         username: !userData.emailOrUsername.includes("@") ? userData.emailOrUsername : undefined,
         password: userData.password,
       });
-      console.log(`console.log(response):`);
-      console.log(response);
+
       setUser(response.user);
       navigate("/home");
     } catch (error) {
@@ -65,6 +71,7 @@ const LoginPage = ({ setUser }) => {
 
 LoginPage.propTypes = {
   setUser: PropTypes.func.isRequired,
+  user: PropTypes.object,
 };
 
 export default LoginPage;

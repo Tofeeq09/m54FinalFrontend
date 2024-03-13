@@ -1,3 +1,5 @@
+// Path: src/components/models/GroupForm.jsx
+
 import { useState } from "react";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
@@ -19,7 +21,6 @@ const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
     try {
       const response = await createGroup(groupData, token);
       if (response?.success) {
-        console.log(response.group);
         setErrorMessage(null);
         onClose?.();
         onGroupCreated?.(response.group);
@@ -106,12 +107,12 @@ const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
           <button type="submit" className="submit-button">
             Create Group
           </button>
-          <button onClick={onClose} className="close-button">
-            Cancel
-          </button>
         </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
+      <button onClick={onClose} className="close-button">
+        Cancel
+      </button>
     </Modal>
   );
 };

@@ -1,11 +1,10 @@
-// src/pages/group/GroupPage.jsx
+// Path: src/pages/group/GroupPage.jsx
 
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import PropTypes from "prop-types";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import "./GroupPage.scss";
 import {
@@ -16,7 +15,7 @@ import {
   leaveGroup,
   deleteGroup,
   joinGroup,
-  createPost,
+  createGroupPost,
   removeUserFromGroup,
 } from "../../utils/fetch";
 import UserCard from "../../components/cards/UserCard";
@@ -24,7 +23,7 @@ import EventCard from "../../components/cards/EventCard";
 import PostCard from "../../components/cards/PostCard";
 import EventForm from "../../components/models/EventForm";
 
-const GroupPage = ({ user }) => {
+const GroupPage = ({ user, token }) => {
   const { groupId } = useParams();
   const [group, setGroup] = useState(null);
   const [users, setUsers] = useState([]);
@@ -46,8 +45,8 @@ const GroupPage = ({ user }) => {
         const eventsData = await getGroupEvents(groupId);
         setEvents(eventsData.events);
 
-        if (user && user.authToken) {
-          const postsData = await getGroupPosts(groupId, user.authToken);
+        if (user && token) {
+          const postsData = await getGroupPosts(groupId, token);
           setPosts(postsData.posts);
         }
       } catch (error) {
@@ -56,7 +55,7 @@ const GroupPage = ({ user }) => {
     };
 
     fetchGroupAndUsersAndEventsAndPosts();
-  }, [groupId, user]);
+  }, [groupId, user, token]);
 
   const currentUser = user && users.find((u) => u.id === user.id);
   const currentUserRole = currentUser?.GroupUser?.role;
@@ -67,7 +66,7 @@ const GroupPage = ({ user }) => {
 
   const handleLeaveGroup = async () => {
     try {
-      const data = await leaveGroup(groupId, user.authToken);
+      const data = await leaveGroup(groupId, token);
       if (data) {
         setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
       }
@@ -90,7 +89,7 @@ const GroupPage = ({ user }) => {
     }
 
     try {
-      const data = await joinGroup(groupId, user.authToken);
+      const data = await joinGroup(groupId, token);
       if (data) {
         setUsers((prevUsers) => [
           ...prevUsers,
@@ -104,7 +103,7 @@ const GroupPage = ({ user }) => {
 
   const handleDeleteGroup = async () => {
     try {
-      const data = await deleteGroup(groupId, user.authToken);
+      const data = await deleteGroup(groupId, token);
       if (data) {
         navigate("/");
       }
@@ -115,7 +114,7 @@ const GroupPage = ({ user }) => {
 
   const handleKickUser = async (userId) => {
     try {
-      await removeUserFromGroup(groupId, userId, user.authToken);
+      await removeUserFromGroup(groupId, userId, token);
       setUsers((prevUsers) => prevUsers.filter((u) => u.id !== userId));
     } catch (error) {
       console.error(error);
@@ -126,15 +125,22 @@ const GroupPage = ({ user }) => {
     event.preventDefault();
 
     if (!newPost.trim()) {
-      console.error("The content field is empty.");
       return;
     }
 
     try {
-      console.log(`New post content: ${newPost}`);
-      const newPostData = await createPost(newPost, groupId, user.authToken);
+      const newPostData = await createGroupPost(newPost, groupId, token);
 
-      setPosts((prevPosts) => [...prevPosts, newPostData]);
+      const newPostWithUser = {
+        ...newPostData.post,
+        User: {
+          id: user.id,
+          username: user.username,
+          avatar: user.avatar,
+        },
+      };
+
+      setPosts((prevPosts) => [...prevPosts, newPostWithUser]);
       setNewPost("");
     } catch (error) {
       console.error(error);
@@ -155,7 +161,9 @@ const GroupPage = ({ user }) => {
           </button>
         )}
         {currentUserRole === "member" && (
-          <button className="disband-button" onClick={handleLeaveGroup}>Leave Group</button>
+          <button className="disband-button" onClick={handleLeaveGroup}>
+            Leave Group
+          </button>
         )}
       </div>
       <p>{group?.description ?? "N/A"}</p>
@@ -166,7 +174,12 @@ const GroupPage = ({ user }) => {
         {group?.createdAt ? new Date(group.createdAt).toLocaleString() : "N/A"}
       </p>
       {!currentUser && <button onClick={handleJoinGroup}>Join Group</button>}
-
+      {currentUserRole === "member" && (
+        <button onClick={handleLeaveGroup}>Leave Group</button>
+      )}
+      {currentUserRole === "admin" && (
+        <button onClick={handleDeleteGroup}>Disband Group</button>
+      )}
       <h2>Members</h2>
       <div className="members-positioning">
         {users?.map(
@@ -205,10 +218,14 @@ const GroupPage = ({ user }) => {
       )}
       {currentUser ? (
         <>
-          <h2>Posts</h2>
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+          <h2>
+            Posts <span>({posts.length})</span>
+          </h2>
+          {posts.length === 0 ? (
+            <p>No posts</p>
+          ) : (
+            posts.map((post) => <PostCard key={post.id} post={post} />)
+          )}
           <form className="group-post-container" onSubmit={handleNewPostSubmit}>
             <input
               type="text"
@@ -218,7 +235,6 @@ const GroupPage = ({ user }) => {
                 group?.name ?? "group member"
               } peeps`}
             />
-
             <button type="submit">Post</button>
           </form>
         </>
@@ -226,7 +242,7 @@ const GroupPage = ({ user }) => {
       <EventForm
         isOpen={isAddEventModalOpen}
         onClose={() => setIsAddEventModalOpen(false)}
-        token={user?.authToken}
+        token={token}
         groupId={group?.id}
         onEventCreated={handleEventCreated}
       />
@@ -236,6 +252,7 @@ const GroupPage = ({ user }) => {
 
 GroupPage.propTypes = {
   user: PropTypes.object,
+  token: PropTypes.string,
 };
 
 export default GroupPage;

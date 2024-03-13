@@ -1,5 +1,7 @@
+// Path: src/pages/components/cards/GroupCard.scss
+
 .group-card {
-  background-color:rgb(0, 139, 139) ;
+  background-color: rgb(0, 139, 139);
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 20px;
@@ -8,7 +10,6 @@
 .group-card:hover {
   background-color: rgb(56, 186, 186);
 }
-
 
 .group-card h2 {
   margin-top: 0;

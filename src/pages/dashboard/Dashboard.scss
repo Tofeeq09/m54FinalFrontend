@@ -1,17 +1,19 @@
+// Path: src/pages/dashboard/Dashboard.scss
+
 .dashboard {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .topics {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .group-content {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .title {
-    font-size: 25px;
-    font-weight: bold;
+  font-size: 25px;
+  font-weight: bold;
 }

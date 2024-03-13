@@ -1,4 +1,4 @@
-// src/components/cards/GroupCard.jsx
+// Path: src/pages/components/cards/GroupCard.jsx
 
 import PropTypes from "prop-types";
 

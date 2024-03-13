@@ -1,3 +1,5 @@
+// Path: src/components/models/EventForm.jsx
+
 import { useState } from "react";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
@@ -20,7 +22,6 @@ const EventForm = ({ isOpen, onClose, token, groupId, onEventCreated }) => {
     try {
       const response = await createEvent(eventData, groupId, token);
       if (response?.success) {
-        console.log(response.event);
         setErrorMessage(null);
         onClose?.();
         onEventCreated?.(response.event);

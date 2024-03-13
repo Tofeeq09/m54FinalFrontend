@@ -1,8 +1,8 @@
-// src/pages/group/GroupPage.scss
+// Path: src/pages/group/GroupPage.scss
 
 .group-page {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .members-positioning {
@@ -35,7 +35,7 @@
   align-items: center;
 }
 
-.group-post-container input{
+.group-post-container input {
   padding: 0.5rem;
   width: 100%;
   margin-left: 1rem;
@@ -47,7 +47,7 @@
 }
 
 .group-post-container button:hover {
-    background-color: rgb(56, 186, 186);
+  background-color: rgb(56, 186, 186);
 }
 
 .disband-button {
@@ -55,8 +55,8 @@
   color: white;
 }
 
-.header-disband-positioning{
-display: flex;
-justify-content: space-between;
-align-items: center;
+.header-disband-positioning {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

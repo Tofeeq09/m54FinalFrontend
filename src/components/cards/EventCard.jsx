@@ -1,4 +1,4 @@
-// src/components/cards/EventCard.jsx
+// Path: src/pages/components/cards/EventCard.jsx
 
 import PropTypes from "prop-types";
 import { useState } from "react";

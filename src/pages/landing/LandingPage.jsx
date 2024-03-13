@@ -1,4 +1,4 @@
-// src/pages/landing/LandingPage.jsx
+// Path: src/pages/landing/LandingPage.jsx
 
 import { useEffect } from "react";
 import PropTypes from "prop-types";
