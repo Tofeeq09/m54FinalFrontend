@@ -80,7 +80,9 @@ const GroupPage = ({ user, token }) => {
       toast.error(
         <div>
           You need to log in to join the group.
-          <button onClick={() => navigate("/login")}>Click here to log in.</button>
+          <button onClick={() => navigate("/login")}>
+            Click here to log in.
+          </button>
         </div>
       );
       return;
@@ -89,7 +91,10 @@ const GroupPage = ({ user, token }) => {
     try {
       const data = await joinGroup(groupId, token);
       if (data) {
-        setUsers((prevUsers) => [...prevUsers, { ...user, GroupUser: { role: "member" } }]);
+        setUsers((prevUsers) => [
+          ...prevUsers,
+          { ...user, GroupUser: { role: "member" } },
+        ]);
       }
     } catch (error) {
       console.error(error);
@@ -148,14 +153,33 @@ const GroupPage = ({ user, token }) => {
 
   return (
     <div className="group-page">
-      <h1>{group?.name ?? "N/A"}</h1>
+      <div className="header-disband-positioning">
+        <h1>{group?.name ?? "N/A"}</h1>
+        {currentUserRole === "admin" && (
+          <button className="disband-button" onClick={handleDeleteGroup}>
+            Disband Group
+          </button>
+        )}
+        {currentUserRole === "member" && (
+          <button className="disband-button" onClick={handleLeaveGroup}>
+            Leave Group
+          </button>
+        )}
+      </div>
       <p>{group?.description ?? "N/A"}</p>
       <p>Topics: {group?.topics?.join(", ") ?? "N/A"}</p>
       <p>Privacy: {group?.privacy_settings ?? "N/A"}</p>
-      <p>Created at: {group?.createdAt ? new Date(group.createdAt).toLocaleString() : "N/A"}</p>
+      <p>
+        Created at:{" "}
+        {group?.createdAt ? new Date(group.createdAt).toLocaleString() : "N/A"}
+      </p>
       {!currentUser && <button onClick={handleJoinGroup}>Join Group</button>}
-      {currentUserRole === "member" && <button onClick={handleLeaveGroup}>Leave Group</button>}
-      {currentUserRole === "admin" && <button onClick={handleDeleteGroup}>Disband Group</button>}
+      {currentUserRole === "member" && (
+        <button onClick={handleLeaveGroup}>Leave Group</button>
+      )}
+      {currentUserRole === "admin" && (
+        <button onClick={handleDeleteGroup}>Disband Group</button>
+      )}
       <h2>Members</h2>
       <div className="members-positioning">
         {users?.map(
@@ -165,26 +189,52 @@ const GroupPage = ({ user, token }) => {
                 key={user.id}
                 user={user}
                 role={user.GroupUser.role}
-                onKick={currentUserRole === "admin" && user.id !== currentUser.id ? handleKickUser : null}
+                onKick={
+                  currentUserRole === "admin" && user.id !== currentUser.id
+                    ? handleKickUser
+                    : null
+                }
                 onClick={() => navigate(`/profile/${user.id}`)}
               />
             )
         )}
       </div>
       <h2>
-        Events <FiPlus onClick={() => setIsAddEventModalOpen(true)} />
+        Events{" "}
+        <FiPlus
+          className="plus-icon"
+          onClick={() => setIsAddEventModalOpen(true)}
+        />
       </h2>
       {events?.map(
-        (event) => event && <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+        (event) =>
+          event && (
+            <EventCard
+              key={event.id}
+              event={event}
+              onClick={() => navigate(`/event/${event.id}`)}
+            />
+          )
       )}
       {currentUser ? (
         <>
           <h2>
             Posts <span>({posts.length})</span>
           </h2>
-          {posts.length === 0 ? <p>No posts</p> : posts.map((post) => <PostCard key={post.id} post={post} />)}
-          <form onSubmit={handleNewPostSubmit}>
-            <input type="text" value={newPost} onChange={handleNewPostChange} />
+          {posts.length === 0 ? (
+            <p>No posts</p>
+          ) : (
+            posts.map((post) => <PostCard key={post.id} post={post} />)
+          )}
+          <form className="group-post-container" onSubmit={handleNewPostSubmit}>
+            <input
+              type="text"
+              value={newPost}
+              onChange={handleNewPostChange}
+              placeholder={`Write a post for your fellow ${
+                group?.name ?? "group member"
+              } peeps`}
+            />
             <button type="submit">Post</button>
           </form>
         </>

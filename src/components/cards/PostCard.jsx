@@ -1,6 +1,7 @@
 // Path: src/pages/components/cards/PostCard.jsx
 
 import PropTypes from "prop-types";
+import "./PostCard.scss"
 
 const PostCard = ({ post }) => {
   if (!post || !post.User) {
