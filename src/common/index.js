@@ -12,7 +12,7 @@ export const writeCookie = (key, value, days) => {
 
   document.cookie =
     key + "=" + value + "; expires=" + date.toGMTString() + "; path=/";
-  console.log("JWT token written to cookie:", value); // JWT token written to cookie: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzEwMzM0ODA5LCJleHAiOjE3MTAzNjM2MDl9.47SeqxsjCNhccnuARcSzXkqJjUWBCTqFWKNtZoNNWrE
+  // console.log("JWT token written to cookie:", value);
 };
 
 export const getCookie = (cookieName) => {
@@ -25,6 +25,6 @@ export const getCookie = (cookieName) => {
     cookie = false;
   }
 
-  console.log("JWT token read from cookie:", cookie);
+  // console.log("JWT token read from cookie:", cookie);
   return cookie;
 };
