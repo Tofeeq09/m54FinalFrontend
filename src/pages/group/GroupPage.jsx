@@ -155,16 +155,6 @@ const GroupPage = ({ user, token }) => {
     <div className="group-page">
       <div className="header-disband-positioning">
         <h1>{group?.name ?? "N/A"}</h1>
-        {currentUserRole === "admin" && (
-          <button className="disband-button" onClick={handleDeleteGroup}>
-            Disband Group
-          </button>
-        )}
-        {currentUserRole === "member" && (
-          <button className="disband-button" onClick={handleLeaveGroup}>
-            Leave Group
-          </button>
-        )}
       </div>
       <p>{group?.description ?? "N/A"}</p>
       <p>Topics: {group?.topics?.join(", ") ?? "N/A"}</p>
