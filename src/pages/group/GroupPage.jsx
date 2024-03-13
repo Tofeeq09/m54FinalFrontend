@@ -155,6 +155,17 @@ const GroupPage = ({ user, token }) => {
     <div className="group-page">
       <div className="header-disband-positioning">
         <h1>{group?.name ?? "N/A"}</h1>
+        {!currentUser && <button onClick={handleJoinGroup}>Join Group</button>}
+        {currentUserRole === "member" && (
+          <button className="negative-button" onClick={handleLeaveGroup}>
+            Leave Group
+          </button>
+        )}
+        {currentUserRole === "admin" && (
+          <button className="negative-button" onClick={handleDeleteGroup}>
+            Disband Group
+          </button>
+        )}
       </div>
       <p>{group?.description ?? "N/A"}</p>
       <p>Topics: {group?.topics?.join(", ") ?? "N/A"}</p>
@@ -163,13 +174,7 @@ const GroupPage = ({ user, token }) => {
         Created at:{" "}
         {group?.createdAt ? new Date(group.createdAt).toLocaleString() : "N/A"}
       </p>
-      {!currentUser && <button onClick={handleJoinGroup}>Join Group</button>}
-      {currentUserRole === "member" && (
-        <button onClick={handleLeaveGroup}>Leave Group</button>
-      )}
-      {currentUserRole === "admin" && (
-        <button onClick={handleDeleteGroup}>Disband Group</button>
-      )}
+
       <h2>Members</h2>
       <div className="members-positioning">
         {users?.map(
@@ -189,7 +194,7 @@ const GroupPage = ({ user, token }) => {
             )
         )}
       </div>
-      <h2>
+      <h2 className=".title-plus-align">
         Events{" "}
         <FiPlus
           className="plus-icon"
@@ -216,7 +221,7 @@ const GroupPage = ({ user, token }) => {
           ) : (
             posts.map((post) => <PostCard key={post.id} post={post} />)
           )}
-          <form className="group-post-container" onSubmit={handleNewPostSubmit}>
+          <form className="post-container" onSubmit={handleNewPostSubmit}>
             <input
               type="text"
               value={newPost}

@@ -109,11 +109,31 @@ const EventPage = ({ user1, token }) => {
     currentUserInEvent && currentUserInEvent.EventUser ? currentUserInEvent.EventUser.role : null;
 
   return (
-    <div>
-      <h1>{event.name}</h1>
+    <div className="group-page">
+      <div className="header-disband-positioning">
+        <h1>{event.name}</h1>
+        {!currentUserInEvent && (
+          <button onClick={handleAttendEvent}>Attend Event</button>
+        )}
+        {currentUserInEvent && currentUserRoleInEvent === "attendee" && (
+          <button className="negative-button" onClick={handleCancelEvent}>
+            Cancel Attendance
+          </button>
+        )}
+        {currentUserInEvent && currentUserRoleInEvent === "organizer" && (
+          <button className="negative-button" onClick={handleDeleteEvent}>
+            Delete Event
+          </button>
+        )}
+      </div>
       <p>{event.description}</p>
       <p>
-        Date: {new Date(event.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+        Date:{" "}
+        {new Date(event.date).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })}
       </p>
       <p>
         Time:{" "}
@@ -124,13 +144,6 @@ const EventPage = ({ user1, token }) => {
         })}
       </p>
       <p>Location: {event.location}</p>
-      {!currentUserInEvent && <button onClick={handleAttendEvent}>Attend Event</button>}
-      {currentUserInEvent && currentUserRoleInEvent === "attendee" && (
-        <button onClick={handleCancelEvent}>Cancel Attendance</button>
-      )}
-      {currentUserInEvent && currentUserRoleInEvent === "organizer" && (
-        <button onClick={handleDeleteEvent}>Delete Event</button>
-      )}
       {event.Group && (
         <>
           <h2>Group: {event.Group.name}</h2>
@@ -138,16 +151,21 @@ const EventPage = ({ user1, token }) => {
         </>
       )}
       <h2>Attendees ({event.attendeeCount})</h2>
-      {event?.Users?.map((user) => (
-        <UserCard key={user.id} user={user} role={user.EventUser.role} />
-      ))}
-      Posts <span>({event?.Posts?.length})</span>
+      <div className="members-positioning">
+        {event?.Users?.map((user) => (
+          <UserCard key={user.id} user={user} role={user.EventUser.role} />
+        ))}
+      </div>
+      <h2>
+        Posts <span>({event?.Posts?.length})</span>
+      </h2>
+
       {event?.Posts?.length === 0 ? (
         <p>No posts</p>
       ) : (
         event?.Posts?.map((post) => <PostCard key={post.id} post={post} />)
       )}
-      <form onSubmit={handleNewPostSubmit}>
+      <form className="post-container" onSubmit={handleNewPostSubmit}>
         <input type="text" value={newPost} onChange={handleNewPostChange} />
         <button type="submit">Post</button>
       </form>
