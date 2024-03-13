@@ -42,34 +42,73 @@ const EventForm = ({ isOpen, onClose, token, groupId, onEventCreated }) => {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose} className="modal">
-      <button onClick={onClose} className="close-button">
-        Close
-      </button>
       <form onSubmit={handleSubmit} className="event-form">
-        <h2>Create a New Event</h2>
-        <label>
-          Event Name:
-          <input type="text" name="name" onChange={handleChange} className="input-field" />
-        </label>
-        <label>
-          Event Description:
-          <input type="text" name="description" onChange={handleChange} className="input-field" />
-        </label>
-        <label>
-          Location:
-          <input type="text" name="location" onChange={handleChange} className="input-field" />
-        </label>
-        <label>
-          Date:
-          <input type="date" name="date" onChange={handleChange} className="input-field" />
-        </label>
-        <label>
-          Time:
-          <input type="time" name="time" onChange={handleChange} className="input-field" />
-        </label>
-        <button type="submit" className="submit-button">
-          Create Event
-        </button>
+        <div className="header-disband-positioning">
+          <h2>Create a New Event</h2>
+        </div>
+        <div>
+          <label>
+            Event Name:
+            <input
+              type="text"
+              name="name"
+              onChange={handleChange}
+              className="input-field"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Event Description:
+            <input
+              type="text"
+              name="description"
+              onChange={handleChange}
+              className="input-field"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Location:
+            <input
+              type="text"
+              name="location"
+              onChange={handleChange}
+              className="input-field"
+            />
+          </label>
+        </div>
+        <div>
+          <label className="event-apart">
+            Date:
+            <input
+              type="date"
+              name="date"
+              onChange={handleChange}
+              className="input-field"
+            />
+          </label>
+        </div>
+        <div>
+          <label className="event-apart">
+            Time:
+            <input
+              type="time"
+              name="time"
+              onChange={handleChange}
+              className="input-field"
+            />
+          </label>
+        </div>
+        <div>
+          <button type="submit" className="positive-button">
+            Create Event
+          </button>
+          <button onClick={onClose} className="negative-button">
+            Close
+          </button>
+        </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
     </Modal>

@@ -23,11 +23,12 @@
 
     .nav-links {
       display: flex;
+      align-items: center;
 
       .nav-link {
         color: #fff;
         text-decoration: none;
-        margin-left: 20px;
+        margin-left: 1.5rem;
         background: none;
         border: none;
         padding: 0;
@@ -58,7 +59,7 @@
         color: #fff;
         padding: 5px 10px;
         border-radius: 3px;
-        margin-left: 10px;
+        margin-left: 1.5rem;
 
         &:hover {
           background-color: #5865f2;

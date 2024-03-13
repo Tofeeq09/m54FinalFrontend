@@ -71,7 +71,7 @@ const Dashboard = ({ user, token }) => {
           <div className="friend-list">
             <details>
               <summary className="title">
-                Your Friends <FiPlus />
+                Your Friends <FiPlus className="plus-icon" />
               </summary>
               {/* Content goes here */}
             </details>
@@ -81,7 +81,11 @@ const Dashboard = ({ user, token }) => {
             <h2>
               <details>
                 <summary className="title">
-                  Your Groups <FiPlus onClick={() => setIsAddGroupModalOpen(true)} />
+                  Your Groups{" "}
+                  <FiPlus
+                    className="plus-icon"
+                    onClick={() => setIsAddGroupModalOpen(true)}
+                  />
                 </summary>
                 {groupErr && <p>{groupErr}</p>}
                 <div className="group-content">
@@ -110,7 +114,11 @@ const Dashboard = ({ user, token }) => {
             <summary className="title">Upcoming Events</summary>
             {eventErr && <p>{eventErr}</p>}
             {events?.upcomingEvents.map((event) => (
-              <EventCard key={event?.id} event={event} onClick={() => navigate(`/event/${event?.id}`)} />
+              <EventCard
+                key={event?.id}
+                event={event}
+                onClick={() => navigate(`/event/${event?.id}`)}
+              />
             ))}
           </details>
 
@@ -118,7 +126,11 @@ const Dashboard = ({ user, token }) => {
             <summary className="title">Past Events</summary>
             {eventErr && <p>{eventErr}</p>}
             {events?.pastEvents.map((event) => (
-              <EventCard key={event?.id} event={event} onClick={() => navigate(`/event/${event?.id}`)} />
+              <EventCard
+                key={event?.id}
+                event={event}
+                onClick={() => navigate(`/event/${event?.id}`)}
+              />
             ))}
           </details>
         </div>
