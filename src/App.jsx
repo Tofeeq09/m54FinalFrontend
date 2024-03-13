@@ -1,7 +1,5 @@
 // Path: src/App.jsx
 
-import "./App.scss";
-
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -21,32 +19,53 @@ import { getCookie } from "./common";
 
 function App() {
   const [user, setUser] = useState();
-  const [cookie, setCookie] = useState();
 
   useEffect(() => {
-    let cookie = getCookie("jwt_token");
+    let cookieValue = getCookie("jwt_token");
 
-    if (cookie !== false) {
-      persistentLogin(cookie);
+    if (cookieValue !== false) {
+      persistentLogin(cookieValue);
     }
   }, []);
 
-  const persistentLogin = async (cookie) => {
-    let user = await tokenCheck(cookie);
-    setUser(user);
-    setCookie(cookie);
+  const persistentLogin = async (cookieValue) => {
+    let userData = await tokenCheck(cookieValue);
+    setUser(userData);
   };
 
   return (
     <>
-      <Navbar token={cookie} user={user} setUser={setUser} avatar={user?.avatar} />
+      <Navbar
+        token={getCookie("jwt_token")}
+        user={user}
+        setUser={setUser}
+        avatar={user?.avatar}
+      />
       <Routes>
-        <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
-        <Route path="/home" element={<Dashboard token={cookie} user={user} />} />
-        <Route path="/signup" element={<SignupPage user={user} setUser={setUser} />} />
-        <Route path="/login" element={<LoginPage user={user} setUser={setUser} />} />
-        <Route path="/group/:groupId" element={<GroupPage token={cookie} user={user} />} />
-        <Route path="/event/:eventId" element={<EventPage token={cookie} user1={user} />} />
+        <Route
+          path="/"
+          element={<LandingPage user={user} setUser={setUser} />}
+        />
+        <Route
+          path="/home"
+          element={<Dashboard token={getCookie("jwt_token")} user={user} />}
+        />
+        <Route
+          path="/signup"
+          element={<SignupPage user={user} setUser={setUser} />}
+        />
+        <Route
+          path="/login"
+          element={<LoginPage user={user} setUser={setUser} />}
+        />
+        <Route
+          path="/group/:groupId"
+          element={<GroupPage token={getCookie("jwt_token")} user={user} />}
+        />
+        <Route
+          path="/event/:eventId"
+          element={<EventPage token={getCookie("jwt_token")} user1={user} />}
+        />
         <Route path="/profile/:username" element={<Profile user={user} />} />
         <Route path="/explorer" element={<Explorer user={user} />} />
       </Routes>

@@ -19,6 +19,7 @@ export const login = async (userData) => {
   });
 
   const data = await response.json();
+  console.log("JWT token received from server:", data.user.authToken);
   writeCookie("jwt_token", data.user.authToken);
 
   if (!response.ok) {
@@ -39,6 +40,8 @@ export const signup = async (userData) => {
   });
 
   const data = await response.json();
+  console.log("JWT token received from server:", data.user.authToken);
+  writeCookie("jwt_token", data.user.authToken);
 
   if (!response.ok) {
     throw new Error(data.error);
@@ -56,6 +59,7 @@ export const tokenCheck = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   });
+  console.log("JWT token sent for verification:", token);
 
   const data = await response.json();
 
@@ -523,14 +527,17 @@ export const deleteEvent = async (eventId, token) => {
 };
 
 export const adminDeleteEvent = async (eventId, groupId, token) => {
-  const response = await fetch(`${url}/api/events/groups/${groupId}/event/${eventId}`, {
-    method: "DELETE",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${url}/api/events/groups/${groupId}/event/${eventId}`,
+    {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   const data = await response.json();
 
@@ -597,13 +604,16 @@ export const getGroupPosts = async (groupId, token) => {
 };
 
 export const getEventPosts = async (groupId, eventId) => {
-  const response = await fetch(`${url}/api/posts/group/${groupId}/event/${eventId}`, {
-    method: "GET",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${url}/api/posts/group/${groupId}/event/${eventId}`,
+    {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await response.json();
 
