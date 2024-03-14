@@ -19,6 +19,10 @@ import { getCookie } from "./common";
 
 function App() {
   const [user, setUser] = useState();
+  const [followData, setFollowData] = useState({
+    followers: [],
+    following: [],
+  });
 
   useEffect(() => {
     let cookieValue = getCookie("jwt_token");
@@ -50,7 +54,14 @@ function App() {
         />
         <Route
           path="/home"
-          element={<Dashboard token={getCookie("jwt_token")} user={user} />}
+          element={
+            <Dashboard
+              token={getCookie("jwt_token")}
+              user={user}
+              followData={followData}
+              setFollowData={setFollowData}
+            />
+          }
         />
         <Route
           path="/signup"
@@ -68,7 +79,10 @@ function App() {
           path="/event/:eventId"
           element={<EventPage token={getCookie("jwt_token")} user1={user} />}
         />
-        <Route path="/profile/:username" element={<Profile user={user} />} />
+        <Route
+          path="/profile/:username"
+          element={<Profile user={user} token={getCookie("jwt_token")} />}
+        />
         <Route path="/explorer" element={<Explorer user={user} />} />
       </Routes>
       <Footer />

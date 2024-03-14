@@ -3,17 +3,23 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useParams, useNavigate } from "react-router-dom";
-import { getUserDetailsByUsername } from "../../utils/fetch";
 
 import "./Profile.scss";
+import {
+  getUserDetailsByUsername,
+  followUser,
+  unfollowUser,
+  isFollowing,
+} from "../../utils/fetch";
 import PostCard from "../../components/cards/PostCard";
 import GroupCard from "../../components/cards/GroupCard";
 import EventCard from "../../components/cards/EventCard";
 
-const Profile = ({ user }) => {
+const Profile = ({ user, token }) => {
   const { username } = useParams();
   const [userDetails, setUserDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [following, setFollowing] = useState(null);
 
   const navigate = useNavigate();
 
@@ -31,18 +37,53 @@ const Profile = ({ user }) => {
     fetchUserDetails();
   }, [username]);
 
+  useEffect(() => {
+    const checkIsFollowing = async () => {
+      if (!userDetails || user.id === userDetails.id) {
+        return;
+      }
+      try {
+        const data = await isFollowing(userDetails.id, token);
+        setFollowing(data.isFollowing);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (userDetails) {
+      checkIsFollowing();
+    }
+  }, [user, userDetails, token]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
+  const handleFollowClick = async () => {
+    try {
+      if (following) {
+        await unfollowUser(userDetails.id, token);
+      } else {
+        await followUser(userDetails.id, token);
+      }
+      setFollowing(!following);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (user && user.username !== username) {
     return (
       <div>
+        <button onClick={handleFollowClick}>
+          {following ? "Unfollow" : "Follow"}
+        </button>
         <h1>{userDetails.username}&apos;s Profile</h1>
         {userDetails && (
           <>
             <h2>{userDetails.username}</h2>
             <img src={userDetails.avatar} alt="User avatar" />
+
             <div>
               <h3>{userDetails.username}&apos;s Posts</h3>
               {userDetails.Posts &&
@@ -100,6 +141,12 @@ const Profile = ({ user }) => {
 
 Profile.propTypes = {
   user: PropTypes.object,
+  followData: PropTypes.shape({
+    followers: PropTypes.arrayOf(PropTypes.object),
+    following: PropTypes.arrayOf(PropTypes.object),
+  }),
+  setFollowData: PropTypes.func,
+  token: PropTypes.string,
 };
 
 export default Profile;

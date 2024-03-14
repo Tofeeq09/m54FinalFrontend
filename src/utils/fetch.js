@@ -645,7 +645,7 @@ export const deletePost = async (postId, token) => {
 };
 
 export const followUser = async (userId, token) => {
-  const response = await fetch(`${url}/api/users/friend/${userId}`, {
+  const response = await fetch(`${url}/api/follow/${userId}`, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -664,7 +664,7 @@ export const followUser = async (userId, token) => {
 };
 
 export const unfollowUser = async (userId, token) => {
-  const response = await fetch(`${url}/api/users/friend/${userId}`, {
+  const response = await fetch(`${url}/api/follow/${userId}`, {
     method: "DELETE",
     mode: "cors",
     headers: {
@@ -726,6 +726,25 @@ export const getUserDetailsByUsername = async (username) => {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const isFollowing = async (userId, token) => {
+  const response = await fetch(`${url}/api/follow/isFollowing/${userId}`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 

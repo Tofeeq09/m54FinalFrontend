@@ -14,17 +14,14 @@ import EventCard from "../../components/cards/EventCard";
 import TopicCard from "../../components/cards/TopicCard";
 import UserCard from "../../components/cards/UserCard";
 
-const Dashboard = ({ user, token }) => {
+const Dashboard = ({ user, token, followData, setFollowData }) => {
   const [groups, setGroups] = useState([]);
   const [groupErr, setGroupErr] = useState(null);
   const [isAddGroupModalOpen, setIsAddGroupModalOpen] = useState(false);
   const [events, setEvents] = useState({ pastEvents: [], upcomingEvents: [] });
   const [eventErr, setEventErr] = useState(null);
   const [topics, setTopics] = useState([]);
-  const [followData, setFollowData] = useState({
-    followers: [],
-    following: [],
-  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,7 +69,7 @@ const Dashboard = ({ user, token }) => {
     } else {
       navigate("/");
     }
-  }, [user, navigate, token]);
+  }, [user, navigate, token, setFollowData]);
 
   const handleGroupCreated = (newGroup) => {
     setGroups((prevGroups) => [...prevGroups, newGroup]);
@@ -186,6 +183,8 @@ const Dashboard = ({ user, token }) => {
 Dashboard.propTypes = {
   user: PropTypes.object,
   token: PropTypes.string,
+  followData: PropTypes.object,
+  setFollowData: PropTypes.func,
 };
 
 export default Dashboard;
