@@ -3,16 +3,26 @@
 import PropTypes from "prop-types";
 import "./UserCard.scss";
 
-const UserCard = ({ user, role, onKick }) => {
+const UserCard = ({ user, role, onKick, onClick }) => {
   return (
-    <div className="user-card-positioning">
+    <div className="user-card-positioning" onClick={onClick}>
       <div className="user-card">
-        <img src={user?.avatar} alt={user?.username} className="profile-picture" />
+        <img
+          src={user?.avatar}
+          alt={user?.username}
+          className="profile-picture"
+        />
         <div className="user-card-text-block">
           <div className="kick-button-positioning">
             <h2>{user?.username}</h2>{" "}
             {onKick && (
-              <button className="kick-button" onClick={() => onKick(user.id)}>
+              <button
+                className="kick-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onKick(user.id);
+                }}
+              >
                 Kick
               </button>
             )}
@@ -34,6 +44,7 @@ UserCard.propTypes = {
   }).isRequired,
   role: PropTypes.string,
   onKick: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 export default UserCard;

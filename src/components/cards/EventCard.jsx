@@ -3,11 +3,14 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
+
 import "./EventCard.scss";
 import UserCard from "./UserCard";
 
 const EventCard = ({ event, onClick }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   if (!event) {
     return null;
@@ -60,7 +63,14 @@ const EventCard = ({ event, onClick }) => {
           <div className="members-positioning">
             {Users &&
               Users.map(
-                (user) => user?.id && <UserCard key={user.id} user={user} />
+                (user) =>
+                  user?.id && (
+                    <UserCard
+                      key={user.id}
+                      user={user}
+                      onClick={() => navigate(`/profile/${user.username}`)}
+                    />
+                  )
               )}
           </div>
         </Modal>

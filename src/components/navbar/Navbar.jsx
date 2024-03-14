@@ -36,7 +36,10 @@ const Navbar = ({ token, user, setUser, avatar }) => {
               </Link>
               <Link to={`/profile/${user?.username}`} className="nav-link">
                 {avatar ? (
-                  <img src={avatar} alt="User avatar" className="avatar" />
+                  <>
+                    <img src={avatar} alt="User avatar" className="avatar" />
+                    <span>{user?.username}</span>
+                  </>
                 ) : (
                   "Profile"
                 )}

@@ -1,10 +1,9 @@
-// Path: src/pages/explorer.Explorer.jsx
-
 import { useEffect, useState } from "react";
 import { getAllGroups } from "../../utils/fetch";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
+import "./Explorer.scss";
 import GroupCard from "../../components/cards/GroupCard";
 
 const Explorer = ({ user }) => {
@@ -35,39 +34,60 @@ const Explorer = ({ user }) => {
     if (event.target.checked) {
       setSelectedTopics((prevTopics) => [...prevTopics, event.target.value]);
     } else {
-      setSelectedTopics((prevTopics) => prevTopics.filter((topic) => topic !== event.target.value));
+      setSelectedTopics((prevTopics) =>
+        prevTopics.filter((topic) => topic !== event.target.value)
+      );
     }
   };
 
   return (
-    <div>
-      <h1>Explorer Page</h1>
-      <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search groups" />
-      <div>
-        <label>
+    <div className="explorer-page">
+      <h1 className="explorer-title">Explorer Page</h1>
+      <input
+        className="search-input"
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Search groups"
+      />
+      <div className="topics">
+        <label className="topic">
           <input type="checkbox" value="Gaming" onChange={handleTopicChange} />
           Gaming
         </label>
-        <label>
-          <input type="checkbox" value="Comics/Manga" onChange={handleTopicChange} />
+        <label className="topic">
+          <input
+            type="checkbox"
+            value="Comics/Manga"
+            onChange={handleTopicChange}
+          />
           Comics/Manga
         </label>
-        <label>
-          <input type="checkbox" value="Movies & TV" onChange={handleTopicChange} />
+        <label className="topic">
+          <input
+            type="checkbox"
+            value="Movies & TV"
+            onChange={handleTopicChange}
+          />
           Movies & TV
         </label>
-        <label>
+        <label className="topic">
           <input type="checkbox" value="Coding" onChange={handleTopicChange} />
           Coding
         </label>
-        <label>
+        <label className="topic">
           <input type="checkbox" value="TTRPG" onChange={handleTopicChange} />
           TTRPG
         </label>
       </div>
       <div className="group-content">
         {groups.map((group) => (
-          <GroupCard key={group.id} user={user} group={group} onClick={() => navigate(`/group/${group.id}`)} />
+          <GroupCard
+            key={group.id}
+            user={user}
+            group={group}
+            onClick={() => navigate(`/group/${group.id}`)}
+          />
         ))}
       </div>
     </div>

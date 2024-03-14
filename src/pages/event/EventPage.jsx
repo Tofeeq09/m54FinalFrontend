@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./EventPage.scss";
 import UserCard from "../../components/cards/UserCard";
@@ -14,6 +14,7 @@ import {
   cancelEventAttendance,
   deleteEvent,
   createEventPost,
+  checkGroupMembershipFromEvent, // import the function
 } from "../../utils/fetch";
 
 const EventPage = ({ user1, token }) => {
@@ -22,6 +23,7 @@ const EventPage = ({ user1, token }) => {
   const [event, setEvent] = useState(null);
   const [error, setError] = useState(null);
   const [newPost, setNewPost] = useState("");
+  const [isMember, setIsMember] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +39,22 @@ const EventPage = ({ user1, token }) => {
 
     fetchEvent();
   }, [eventId]);
+
+  useEffect(() => {
+    const fetchMembershipStatus = async () => {
+      if (!eventId || !token) {
+        return;
+      }
+      try {
+        const data = await checkGroupMembershipFromEvent(eventId, token);
+        setIsMember(data.isMember);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMembershipStatus();
+  }, [eventId, token]);
 
   if (error) {
     return <div>{error}</div>;
@@ -170,16 +188,21 @@ const EventPage = ({ user1, token }) => {
         })}
       </p>
       <p>Location: {event.location}</p>
-      {event.Group && (
-        <>
-          <h2>Group: {event.Group.name}</h2>
-          <p>Group topics: {event.Group.topics.join(", ")}</p>
-        </>
-      )}
+      <h2 className="group-name">
+        Group: <Link to={`/group/${event.Group.id}`}>{event.Group.name}</Link>
+      </h2>
+      <p className="group-topics">
+        Group topics: {event.Group.topics.join(", ")}
+      </p>
       <h2>Attendees ({event.attendeeCount})</h2>
       <div className="members-positioning">
         {event?.Users?.map((user) => (
-          <UserCard key={user.id} user={user} role={user.EventUser.role} />
+          <UserCard
+            key={user.id}
+            user={user}
+            role={user.EventUser.role}
+            onClick={() => navigate(`/profile/${user.username}`)}
+          />
         ))}
       </div>
       <h2>
@@ -196,10 +219,12 @@ const EventPage = ({ user1, token }) => {
         onSubmit={handleNewPostSubmit}
         placeholder="comment"
       >
-        {currentUserInEvent && (
+        {currentUserInEvent && isMember && (
           <input type="text" value={newPost} onChange={handleNewPostChange} />
         )}
-        {currentUserInEvent && <button type="submit">Post</button>}
+        {currentUserInEvent && isMember && <button type="submit">Post</button>}
+        {!isMember && <p>Join the group to post</p>}
+        {isMember && !currentUserInEvent && <p>Join the event to post</p>}
       </form>
     </div>
   );
