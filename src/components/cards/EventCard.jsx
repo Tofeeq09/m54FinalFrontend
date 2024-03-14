@@ -45,17 +45,23 @@ const EventCard = ({ event, onClick }) => {
       onClick={onClick}
     >
       <div className="header-disband-positioning">
-        <h2>
-          #{id} {name}
-        </h2>
-        <button onClick={toggleModal}>View Attendees</button>
+        <div className="event-card-header">
+          <h2>
+            #{id} {name}
+          </h2>
+          <p>Group: {Group?.name}</p>
+        </div>
+
+        <button onClick={toggleModal}>View Attendees ({attendeeCount})</button>
         <Modal
           isOpen={isModalOpen}
           onRequestClose={toggleModal}
           contentLabel="Attendees"
         >
           <div className="header-disband-positioning">
-            <h2>Attendees</h2>
+            <h2>
+              <span>{attendeeCount}</span>Attendees
+            </h2>
             <button className="negative-button" onClick={toggleModal}>
               Close
             </button>
@@ -83,8 +89,6 @@ const EventCard = ({ event, onClick }) => {
         Created At: {createdDate?.toLocaleDateString()}{" "}
         {createdDate?.toLocaleTimeString()}
       </p>
-      <p>Group: {Group?.name}</p>
-      <p>Attendee Count: {attendeeCount}</p>
     </div>
   );
 };

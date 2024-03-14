@@ -6,12 +6,13 @@ import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 import "./Dashboard.scss";
-import { getUserGroups, getUserEvents } from "../../utils/fetch";
+import { getUserGroups, getUserEvents, getFollowData } from "../../utils/fetch";
 import { validTopics } from "../../utils/staticData";
 import GroupCard from "../../components/cards/GroupCard";
 import GroupForm from "../../components/models/GroupForm";
 import EventCard from "../../components/cards/EventCard";
 import TopicCard from "../../components/cards/TopicCard";
+import UserCard from "../../components/cards/UserCard";
 
 const Dashboard = ({ user, token }) => {
   const [groups, setGroups] = useState([]);
@@ -20,6 +21,10 @@ const Dashboard = ({ user, token }) => {
   const [events, setEvents] = useState({ pastEvents: [], upcomingEvents: [] });
   const [eventErr, setEventErr] = useState(null);
   const [topics, setTopics] = useState([]);
+  const [followData, setFollowData] = useState({
+    followers: [],
+    following: [],
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,13 +56,23 @@ const Dashboard = ({ user, token }) => {
         }
       };
 
+      const fetchFollowData = async () => {
+        try {
+          const data = await getFollowData(user?.id, token);
+          setFollowData(data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
       fetchGroups();
       fetchEvents();
       fetchTopics();
+      fetchFollowData();
     } else {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [user, navigate, token]);
 
   const handleGroupCreated = (newGroup) => {
     setGroups((prevGroups) => [...prevGroups, newGroup]);
@@ -69,40 +84,41 @@ const Dashboard = ({ user, token }) => {
       <div className="dashboard-content">
         <div className="lists">
           <div>
-            <h2>
-              <details>
-                <summary className="title">
-                  Your Groups{" "}
-                  <FiPlus
-                    className="plus-icon"
-                    onClick={() => setIsAddGroupModalOpen(true)}
+            <h2 className="title">Topics</h2>
+            <div className="topics">
+              {topics.map((topic, index) => (
+                <TopicCard key={index} topic={topic} />
+              ))}
+            </div>
+
+            <details>
+              <summary className="title">
+                Your Groups ({groups.length}){" "}
+                <FiPlus
+                  className="plus-icon"
+                  onClick={() => setIsAddGroupModalOpen(true)}
+                />
+              </summary>
+              {groupErr && <p>{groupErr}</p>}
+              <div className="group-content">
+                {groups.map((group) => (
+                  <GroupCard
+                    key={group?.id}
+                    user={user}
+                    group={group}
+                    onClick={() => navigate(`/group/${group?.id}`)}
                   />
-                </summary>
-                {groupErr && <p>{groupErr}</p>}
-                <div className="group-content">
-                  {groups.map((group) => (
-                    <GroupCard
-                      key={group?.id}
-                      user={user}
-                      group={group}
-                      onClick={() => navigate(`/group/${group?.id}`)}
-                    />
-                  ))}
-                </div>
-              </details>
-            </h2>
+                ))}
+              </div>
+            </details>
           </div>
-        </div>
-        <h2 className="title">Topics</h2>
-        <div className="topics">
-          {topics.map((topic, index) => (
-            <TopicCard key={index} topic={topic} />
-          ))}
         </div>
 
         <div className="events">
           <details>
-            <summary className="title">Upcoming Events</summary>
+            <summary className="title">
+              Upcoming Events ({events?.upcomingEvents.length || 0})
+            </summary>
             {eventErr && <p>{eventErr}</p>}
             {events?.upcomingEvents.map((event) => (
               <EventCard
@@ -114,7 +130,9 @@ const Dashboard = ({ user, token }) => {
           </details>
 
           <details>
-            <summary className="title">Past Events</summary>
+            <summary className="title">
+              Past Events ({events?.pastEvents.length || 0})
+            </summary>
             {eventErr && <p>{eventErr}</p>}
             {events?.pastEvents.map((event) => (
               <EventCard
@@ -127,29 +145,31 @@ const Dashboard = ({ user, token }) => {
         </div>
       </div>
 
-      <div className="events">
+      <div className="followers">
         <details>
-          <summary className="title">Followers</summary>
-          {/* {eventErr && <p>{eventErr}</p>}
-          {events?.upcomingEvents.map((event) => (
-            <EventCard
-              key={event?.id}
-              event={event}
-              onClick={() => navigate(`/event/${event?.id}`)}
+          <summary className="title">
+            Followers ({followData.followers.length})
+          </summary>
+          {followData.followers.map((user) => (
+            <UserCard
+              key={user.id}
+              user={user}
+              onClick={() => navigate(`/profile/${user.username}`)}
             />
-          ))} */}
+          ))}
         </details>
 
         <details>
-          <summary className="title">Following</summary>
-          {/* {eventErr && <p>{eventErr}</p>}
-          {events?.pastEvents.map((event) => (
-            <EventCard
-              key={event?.id}
-              event={event}
-              onClick={() => navigate(`/event/${event?.id}`)}
+          <summary className="title">
+            Following ({followData.following.length})
+          </summary>
+          {followData.following.map((user) => (
+            <UserCard
+              key={user.id}
+              user={user}
+              onClick={() => navigate(`/profile/${user.username}`)}
             />
-          ))} */}
+          ))}
         </details>
       </div>
 

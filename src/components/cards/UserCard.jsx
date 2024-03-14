@@ -28,7 +28,7 @@ const UserCard = ({ user, role, onKick, onClick }) => {
             )}
           </div>
           <p>{user?.online ? "Online" : "Offline"}</p>
-          <p>Role: {role}</p>
+          {role && <p>Role: {role}</p>}
         </div>
       </div>
     </div>

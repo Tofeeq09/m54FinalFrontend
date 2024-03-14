@@ -644,7 +644,7 @@ export const deletePost = async (postId, token) => {
   return data;
 };
 
-export const addFriend = async (userId, token) => {
+export const followUser = async (userId, token) => {
   const response = await fetch(`${url}/api/users/friend/${userId}`, {
     method: "POST",
     mode: "cors",
@@ -663,7 +663,7 @@ export const addFriend = async (userId, token) => {
   return data;
 };
 
-export const removeFriend = async (userId, token) => {
+export const unfollowUser = async (userId, token) => {
   const response = await fetch(`${url}/api/users/friend/${userId}`, {
     method: "DELETE",
     mode: "cors",
@@ -682,8 +682,8 @@ export const removeFriend = async (userId, token) => {
   return data;
 };
 
-export const getUserFriends = async (token) => {
-  const response = await fetch(`${url}/api/users/friends`, {
+export const getFollowData = async (eventId, token) => {
+  const response = await fetch(`${url}/api/follow/${eventId}`, {
     method: "GET",
     mode: "cors",
     headers: {

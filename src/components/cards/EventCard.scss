@@ -27,3 +27,19 @@
     background-color: rgb(223, 126, 21);
   }
 }
+
+.event-card-header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: baseline;
+
+  > * {
+    margin: 0;
+    line-height: normal;
+  }
+
+  p {
+    margin: 0 10px;
+  }
+}

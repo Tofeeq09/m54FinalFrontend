@@ -14,7 +14,7 @@ import {
   cancelEventAttendance,
   deleteEvent,
   createEventPost,
-  checkGroupMembershipFromEvent, // import the function
+  checkGroupMembershipFromEvent,
 } from "../../utils/fetch";
 
 const EventPage = ({ user1, token }) => {

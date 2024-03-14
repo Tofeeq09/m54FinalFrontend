@@ -44,14 +44,14 @@ const Profile = ({ user }) => {
             <h2>{userDetails.username}</h2>
             <img src={userDetails.avatar} alt="User avatar" />
             <div>
-              <h3>Posts</h3>
+              <h3>{userDetails.username}&apos;s Posts</h3>
               {userDetails.Posts &&
                 userDetails.Posts.map((post) => (
                   <PostCard key={post.id} post={post} />
                 ))}
             </div>
             <div>
-              <h3>Groups</h3>
+              <h3>{userDetails.username}&apos;s Groups</h3>
               {userDetails.Groups &&
                 userDetails.Groups.map((group) => (
                   <GroupCard
@@ -62,7 +62,7 @@ const Profile = ({ user }) => {
                 ))}
             </div>
             <div>
-              <h3>Events</h3>
+              <h3>{userDetails.username}&apos;s Events</h3>
               {userDetails.Events &&
                 userDetails.Events.map((event) => (
                   <EventCard
@@ -78,7 +78,24 @@ const Profile = ({ user }) => {
     );
   }
 
-  return <div>Your profile</div>;
+  return (
+    <div>
+      <h1>{userDetails.username}&apos;s Profile</h1>
+      {userDetails && (
+        <>
+          <h2>{userDetails.username}</h2>
+          <img src={userDetails.avatar} alt="User avatar" />
+          <div>
+            <h3>Your Posts</h3>
+            {userDetails.Posts &&
+              userDetails.Posts.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 Profile.propTypes = {
