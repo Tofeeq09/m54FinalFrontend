@@ -97,8 +97,8 @@ const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
               Coding
             </label>
             <label>
-              <input type="checkbox" name="topics" value="TTRPG" />
-              TTRPG
+              <input type="checkbox" name="topics" value="Sports" />
+              Sports
             </label>
           </div>
         </fieldset>

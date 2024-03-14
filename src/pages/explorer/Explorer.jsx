@@ -76,8 +76,8 @@ const Explorer = ({ user }) => {
           Coding
         </label>
         <label className="topic">
-          <input type="checkbox" value="TTRPG" onChange={handleTopicChange} />
-          TTRPG
+          <input type="checkbox" value="Sports" onChange={handleTopicChange} />
+          Sports
         </label>
       </div>
       <div className="group-content">
