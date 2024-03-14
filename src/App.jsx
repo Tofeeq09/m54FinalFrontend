@@ -23,14 +23,16 @@ function App() {
   useEffect(() => {
     let cookieValue = getCookie("jwt_token");
 
-    if (cookieValue !== false) {
+    if (cookieValue) {
       persistentLogin(cookieValue);
     }
   }, []);
 
   const persistentLogin = async (cookieValue) => {
-    let userData = await tokenCheck(cookieValue);
-    setUser(userData);
+    if (cookieValue) {
+      let userData = await tokenCheck(cookieValue);
+      setUser(userData);
+    }
   };
 
   return (

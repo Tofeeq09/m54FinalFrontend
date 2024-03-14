@@ -137,7 +137,9 @@ const EventPage = ({ user1, token }) => {
       <div className="header-disband-positioning">
         <h1>{event.name}</h1>
         {!currentUserInEvent && (
-          <button className="positive-button" onClick={handleAttendEvent}>Attend Event</button>
+          <button className="positive-button" onClick={handleAttendEvent}>
+            Attend Event
+          </button>
         )}
         {currentUserInEvent && currentUserRoleInEvent === "attendee" && (
           <button className="negative-button" onClick={handleCancelEvent}>
@@ -194,8 +196,10 @@ const EventPage = ({ user1, token }) => {
         onSubmit={handleNewPostSubmit}
         placeholder="comment"
       >
-        <input type="text" value={newPost} onChange={handleNewPostChange} />
-        <button type="submit">Post</button>
+        {currentUserInEvent && (
+          <input type="text" value={newPost} onChange={handleNewPostChange} />
+        )}
+        {currentUserInEvent && <button type="submit">Post</button>}
       </form>
     </div>
   );
