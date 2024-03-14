@@ -88,12 +88,13 @@ export const getAllUsers = async (username = "") => {
   return data;
 };
 
-export const getUser = async (username) => {
-  const response = await fetch(`${url}/api/users/${username}`, {
+export const getUserEmail = async (token) => {
+  const response = await fetch(`${url}/api/users/private`, {
     method: "GET",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -707,6 +708,24 @@ export const checkGroupMembershipFromEvent = async (eventId, token) => {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const getUserDetailsByUsername = async (username) => {
+  const response = await fetch(`${url}/api/users/username/${username}`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
     },
   });
 
