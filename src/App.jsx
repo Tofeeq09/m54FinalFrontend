@@ -2,6 +2,7 @@
 
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 import "./App.scss";
 import Navbar from "./components/navbar/Navbar";
@@ -19,22 +20,29 @@ import { getCookie } from "./common";
 
 function App() {
   const [user, setUser] = useState();
+  const [followData, setFollowData] = useState({
+    followers: [],
+    following: [],
+  });
 
   useEffect(() => {
     let cookieValue = getCookie("jwt_token");
 
-    if (cookieValue !== false) {
+    if (cookieValue) {
       persistentLogin(cookieValue);
     }
   }, []);
 
   const persistentLogin = async (cookieValue) => {
-    let userData = await tokenCheck(cookieValue);
-    setUser(userData);
+    if (cookieValue) {
+      let userData = await tokenCheck(cookieValue);
+      setUser(userData);
+    }
   };
 
   return (
     <>
+      <ToastContainer />
       <Navbar
         token={getCookie("jwt_token")}
         user={user}
@@ -48,7 +56,14 @@ function App() {
         />
         <Route
           path="/home"
-          element={<Dashboard token={getCookie("jwt_token")} user={user} />}
+          element={
+            <Dashboard
+              token={getCookie("jwt_token")}
+              user={user}
+              followData={followData}
+              setFollowData={setFollowData}
+            />
+          }
         />
         <Route
           path="/signup"
@@ -66,7 +81,16 @@ function App() {
           path="/event/:eventId"
           element={<EventPage token={getCookie("jwt_token")} user1={user} />}
         />
-        <Route path="/profile/:username" element={<Profile user={user} />} />
+        <Route
+          path="/profile/:username"
+          element={
+            <Profile
+              user={user}
+              setUser={setUser}
+              token={getCookie("jwt_token")}
+            />
+          }
+        />
         <Route path="/explorer" element={<Explorer user={user} />} />
       </Routes>
       <Footer />

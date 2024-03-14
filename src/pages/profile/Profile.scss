@@ -1,1 +1,41 @@
 // Path: src/pages/profile/Profile.scss
+
+.profile-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.follow-button {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.profile-title {
+  color: #333;
+  font-size: 24px;
+}
+
+.username {
+  color: #666;
+  font-size: 20px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.posts,
+.groups,
+.events {
+  margin-top: 20px;
+}
+
+.section-title {
+  color: #333;
+  font-size: 18px;
+}

@@ -26,6 +26,7 @@ const Navbar = ({ token, user, setUser, avatar }) => {
       <div className="nav-container">
         <Link to={user ? "/home" : "/"} className="logo-container">
           <img src={logo} alt="Logo" className="logo" />
+          <span className="brand-name">SQUADS</span>
         </Link>
 
         <div className="nav-links">
@@ -36,7 +37,10 @@ const Navbar = ({ token, user, setUser, avatar }) => {
               </Link>
               <Link to={`/profile/${user?.username}`} className="nav-link">
                 {avatar ? (
-                  <img src={avatar} alt="User avatar" className="avatar" />
+                  <>
+                    <img src={avatar} alt="User avatar" className="avatar" />
+                    <span>{user?.username}</span>
+                  </>
                 ) : (
                   "Profile"
                 )}

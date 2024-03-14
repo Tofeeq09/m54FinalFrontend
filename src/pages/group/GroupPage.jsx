@@ -155,7 +155,11 @@ const GroupPage = ({ user, token }) => {
     <div className="group-page">
       <div className="header-disband-positioning">
         <h1>{group?.name ?? "N/A"}</h1>
-        {!currentUser && <button className="positive-button" onClick={handleJoinGroup}>Join Group</button>}
+        {!currentUser && (
+          <button className="positive-button" onClick={handleJoinGroup}>
+            Join Group
+          </button>
+        )}
         {currentUserRole === "member" && (
           <button className="negative-button" onClick={handleLeaveGroup}>
             Leave Group
@@ -189,7 +193,7 @@ const GroupPage = ({ user, token }) => {
                     ? handleKickUser
                     : null
                 }
-                onClick={() => navigate(`/profile/${user.id}`)}
+                onClick={() => navigate(`/profile/${user.username}`)}
               />
             )
         )}

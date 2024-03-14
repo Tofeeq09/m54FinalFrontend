@@ -22,7 +22,7 @@ export const getCookie = (cookieName) => {
   try {
     cookie = document.cookie.match(re)[0];
   } catch (error) {
-    cookie = false;
+    cookie = null;
   }
 
   // console.log("JWT token read from cookie:", cookie);

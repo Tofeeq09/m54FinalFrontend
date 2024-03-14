@@ -1,1 +1,43 @@
-// Path: src/pages/explorer.Explorer.scss
+/* Path: src/pages/explorer.Explorer.css */
+
+.explorer {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.explorer-title {
+  color: #333;
+  font-size: 24px;
+}
+
+.search-mode {
+  margin-bottom: 10px;
+}
+
+.search-input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.topics label {
+  margin-right: 10px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}

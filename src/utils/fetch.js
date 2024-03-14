@@ -85,15 +85,16 @@ export const getAllUsers = async (username = "") => {
     throw new Error(data.error);
   }
 
-  return data;
+  return data.users;
 };
 
-export const getUser = async (username) => {
-  const response = await fetch(`${url}/api/users/${username}`, {
+export const getUserEmail = async (token) => {
+  const response = await fetch(`${url}/api/users/private`, {
     method: "GET",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -126,6 +127,13 @@ export const logout = async (token) => {
 };
 
 export const sendUpdatedUser = async (userData, token) => {
+  const updatedFields = Object.keys(userData).reduce((acc, key) => {
+    if (userData[key] !== null) {
+      acc[key] = userData[key];
+    }
+    return acc;
+  }, {});
+
   const response = await fetch(`${url}/api/users`, {
     method: "PUT",
     mode: "cors",
@@ -133,7 +141,7 @@ export const sendUpdatedUser = async (userData, token) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(updatedFields),
   });
 
   const data = await response.json();
@@ -156,13 +164,15 @@ export const deleteUser = async (password, token) => {
     body: JSON.stringify({ password }),
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
-    throw new Error(data.error);
+    if (response.status !== 204) {
+      const data = await response.json();
+      throw new Error(data.error);
+    }
+    throw new Error("Delete operation failed");
   }
 
-  return data;
+  return null;
 };
 
 export const getUserGroups = async (userId) => {
@@ -627,6 +637,119 @@ export const getEventPosts = async (groupId, eventId) => {
 export const deletePost = async (postId, token) => {
   const response = await fetch(`${url}/api/posts/${postId}`, {
     method: "DELETE",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const followUser = async (userId, token) => {
+  const response = await fetch(`${url}/api/follow/${userId}`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const unfollowUser = async (userId, token) => {
+  const response = await fetch(`${url}/api/follow/${userId}`, {
+    method: "DELETE",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const getFollowData = async (eventId, token) => {
+  const response = await fetch(`${url}/api/follow/${eventId}`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const checkGroupMembershipFromEvent = async (eventId, token) => {
+  const response = await fetch(`${url}/api/events/member/${eventId}`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const getUserDetailsByUsername = async (username) => {
+  const response = await fetch(`${url}/api/users/username/${username}`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+};
+
+export const isFollowing = async (userId, token) => {
+  const response = await fetch(`${url}/api/follow/isFollowing/${userId}`, {
+    method: "GET",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
