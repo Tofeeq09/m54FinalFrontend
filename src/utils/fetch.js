@@ -85,7 +85,7 @@ export const getAllUsers = async (username = "") => {
     throw new Error(data.error);
   }
 
-  return data;
+  return data.users;
 };
 
 export const getUserEmail = async (token) => {

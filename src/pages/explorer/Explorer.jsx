@@ -1,15 +1,20 @@
+// Path: src/pages/explorer.Explorer.jsx
+
 import { useEffect, useState } from "react";
-import { getAllGroups } from "../../utils/fetch";
+import { getAllGroups, getAllUsers } from "../../utils/fetch";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import "./Explorer.scss";
 import GroupCard from "../../components/cards/GroupCard";
+import UserCard from "../../components/cards/UserCard";
 
 const Explorer = ({ user }) => {
   const [groups, setGroups] = useState([]);
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTopics, setSelectedTopics] = useState([]);
+  const [searchMode, setSearchMode] = useState("groups");
 
   const navigate = useNavigate();
 
@@ -23,8 +28,21 @@ const Explorer = ({ user }) => {
       }
     };
 
-    fetchGroups();
-  }, [searchTerm, selectedTopics]);
+    const fetchUsers = async () => {
+      try {
+        const data = await getAllUsers(searchTerm);
+        setUsers(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (searchMode === "groups") {
+      fetchGroups();
+    } else {
+      fetchUsers();
+    }
+  }, [searchTerm, selectedTopics, searchMode]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -40,55 +58,102 @@ const Explorer = ({ user }) => {
     }
   };
 
+  const handleSearchModeChange = (event) => {
+    setSearchMode(event.target.value);
+  };
+
   return (
-    <div className="explorer-page">
-      <h1 className="explorer-title">Explorer Page</h1>
+    <div className="explorer">
+      <h1>Explorer Page</h1>
+      <div>
+        <label>
+          <input
+            type="radio"
+            value="groups"
+            checked={searchMode === "groups"}
+            onChange={handleSearchModeChange}
+          />
+          Groups
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="users"
+            checked={searchMode === "users"}
+            onChange={handleSearchModeChange}
+          />
+          Users
+        </label>
+      </div>
       <input
-        className="search-input"
         type="text"
         value={searchTerm}
         onChange={handleSearchChange}
-        placeholder="Search groups"
+        placeholder={`Search ${searchMode}`}
+        className="search-input"
       />
-      <div className="topics">
-        <label className="topic">
-          <input type="checkbox" value="Gaming" onChange={handleTopicChange} />
-          Gaming
-        </label>
-        <label className="topic">
-          <input
-            type="checkbox"
-            value="Comics/Manga"
-            onChange={handleTopicChange}
-          />
-          Comics/Manga
-        </label>
-        <label className="topic">
-          <input
-            type="checkbox"
-            value="Movies & TV"
-            onChange={handleTopicChange}
-          />
-          Movies & TV
-        </label>
-        <label className="topic">
-          <input type="checkbox" value="Coding" onChange={handleTopicChange} />
-          Coding
-        </label>
-        <label className="topic">
-          <input type="checkbox" value="Sports" onChange={handleTopicChange} />
-          Sports
-        </label>
-      </div>
-      <div className="group-content">
-        {groups.map((group) => (
-          <GroupCard
-            key={group.id}
-            user={user}
-            group={group}
-            onClick={() => navigate(`/group/${group.id}`)}
-          />
-        ))}
+      {searchMode === "groups" && (
+        <div className="topics">
+          <label>
+            <input
+              type="checkbox"
+              value="Gaming"
+              onChange={handleTopicChange}
+            />
+            Gaming
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Comics/Manga"
+              onChange={handleTopicChange}
+            />
+            Comics/Manga
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Movies & TV"
+              onChange={handleTopicChange}
+            />
+            Movies & TV
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Coding"
+              onChange={handleTopicChange}
+            />
+            Coding
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Sports"
+              onChange={handleTopicChange}
+            />
+            Sports
+          </label>
+        </div>
+      )}
+
+      <div className="content">
+        {searchMode === "groups"
+          ? groups.map((group) => (
+              <GroupCard
+                key={group.id}
+                user={user}
+                group={group}
+                onClick={() => navigate(`/group/${group.id}`)}
+              />
+            ))
+          : users.map((user) => (
+              <UserCard
+                key={user.id}
+                user={user}
+                onClick={() => navigate(`/profile/${user.username}`)}
+              />
+            ))}
       </div>
     </div>
   );
