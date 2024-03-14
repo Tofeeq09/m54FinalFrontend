@@ -1,5 +1,3 @@
-// Path: src/pages/explorer.Explorer.jsx
-
 import { useEffect, useState } from "react";
 import { getAllGroups, getAllUsers } from "../../utils/fetch";
 import PropTypes from "prop-types";
@@ -137,7 +135,7 @@ const Explorer = ({ user }) => {
         </div>
       )}
 
-      <div className="content">
+      <div className="members-positioning">
         {searchMode === "groups"
           ? groups.map((group) => (
               <GroupCard
