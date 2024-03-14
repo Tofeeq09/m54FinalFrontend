@@ -14,12 +14,16 @@ import {
 import PostCard from "../../components/cards/PostCard";
 import GroupCard from "../../components/cards/GroupCard";
 import EventCard from "../../components/cards/EventCard";
+import UpdateUserForm from "../../components/models/UpdateUserForm";
+import DeleteUserForm from "../../components/models/DeleteUserForm";
 
-const Profile = ({ user, token }) => {
+const Profile = ({ user, setUser, token }) => {
   const { username } = useParams();
   const [userDetails, setUserDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [following, setFollowing] = useState(null);
+  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -74,25 +78,33 @@ const Profile = ({ user, token }) => {
 
   if (user && user.username !== username) {
     return (
-      <div>
-        <button onClick={handleFollowClick}>
+      <div className="profile-container">
+        <button className="follow-button" onClick={handleFollowClick}>
           {following ? "Unfollow" : "Follow"}
         </button>
-        <h1>{userDetails.username}&apos;s Profile</h1>
+        <h1 className="profile-title">{userDetails.username}&apos;s Profile</h1>
         {userDetails && (
           <>
-            <h2>{userDetails.username}</h2>
-            <img src={userDetails.avatar} alt="User avatar" />
+            <h2 className="username">{userDetails.username}</h2>
+            <img
+              className="avatar"
+              src={userDetails.avatar}
+              alt="User avatar"
+            />
 
-            <div>
-              <h3>{userDetails.username}&apos;s Posts</h3>
+            <div className="posts">
+              <h3 className="section-title">
+                {userDetails.username}&apos;s Posts
+              </h3>
               {userDetails.Posts &&
                 userDetails.Posts.map((post) => (
                   <PostCard key={post.id} post={post} />
                 ))}
             </div>
-            <div>
-              <h3>{userDetails.username}&apos;s Groups</h3>
+            <div className="groups">
+              <h3 className="section-title">
+                {userDetails.username}&apos;s Groups
+              </h3>
               {userDetails.Groups &&
                 userDetails.Groups.map((group) => (
                   <GroupCard
@@ -102,8 +114,10 @@ const Profile = ({ user, token }) => {
                   />
                 ))}
             </div>
-            <div>
-              <h3>{userDetails.username}&apos;s Events</h3>
+            <div className="events">
+              <h3 className="section-title">
+                {userDetails.username}&apos;s Events
+              </h3>
               {userDetails.Events &&
                 userDetails.Events.map((event) => (
                   <EventCard
@@ -120,14 +134,31 @@ const Profile = ({ user, token }) => {
   }
 
   return (
-    <div>
-      <h1>{userDetails.username}&apos;s Profile</h1>
+    <div className="profile-container">
+      <h1 className="profile-title">{userDetails.username}&apos;s Profile</h1>
+      <button onClick={() => setUpdateModalOpen(true)}>
+        Update Information
+      </button>
+      <button onClick={() => setDeleteModalOpen(true)}>Delete Account</button>
+      <UpdateUserForm
+        isOpen={isUpdateModalOpen}
+        onClose={() => setUpdateModalOpen(false)}
+        token={token}
+        setUser={setUser}
+      />
+      <DeleteUserForm
+        isOpen={isDeleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        token={token}
+        username={user.username}
+        setUser={setUser}
+      />
       {userDetails && (
         <>
-          <h2>{userDetails.username}</h2>
-          <img src={userDetails.avatar} alt="User avatar" />
-          <div>
-            <h3>Your Posts</h3>
+          <h2 className="username">{userDetails.username}</h2>
+          <img className="avatar" src={userDetails.avatar} alt="User avatar" />
+          <div className="posts">
+            <h3 className="section-title">Your Posts</h3>
             {userDetails.Posts &&
               userDetails.Posts.map((post) => (
                 <PostCard key={post.id} post={post} />
@@ -141,12 +172,9 @@ const Profile = ({ user, token }) => {
 
 Profile.propTypes = {
   user: PropTypes.object,
-  followData: PropTypes.shape({
-    followers: PropTypes.arrayOf(PropTypes.object),
-    following: PropTypes.arrayOf(PropTypes.object),
-  }),
   setFollowData: PropTypes.func,
   token: PropTypes.string,
+  setUser: PropTypes.func,
 };
 
 export default Profile;

@@ -127,6 +127,13 @@ export const logout = async (token) => {
 };
 
 export const sendUpdatedUser = async (userData, token) => {
+  const updatedFields = Object.keys(userData).reduce((acc, key) => {
+    if (userData[key] !== null) {
+      acc[key] = userData[key];
+    }
+    return acc;
+  }, {});
+
   const response = await fetch(`${url}/api/users`, {
     method: "PUT",
     mode: "cors",
@@ -134,7 +141,7 @@ export const sendUpdatedUser = async (userData, token) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(updatedFields),
   });
 
   const data = await response.json();
@@ -157,13 +164,15 @@ export const deleteUser = async (password, token) => {
     body: JSON.stringify({ password }),
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
-    throw new Error(data.error);
+    if (response.status !== 204) {
+      const data = await response.json();
+      throw new Error(data.error);
+    }
+    throw new Error("Delete operation failed");
   }
 
-  return data;
+  return null;
 };
 
 export const getUserGroups = async (userId) => {

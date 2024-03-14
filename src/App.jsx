@@ -2,6 +2,7 @@
 
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 import "./App.scss";
 import Navbar from "./components/navbar/Navbar";
@@ -41,6 +42,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <Navbar
         token={getCookie("jwt_token")}
         user={user}
@@ -81,7 +83,13 @@ function App() {
         />
         <Route
           path="/profile/:username"
-          element={<Profile user={user} token={getCookie("jwt_token")} />}
+          element={
+            <Profile
+              user={user}
+              setUser={setUser}
+              token={getCookie("jwt_token")}
+            />
+          }
         />
         <Route path="/explorer" element={<Explorer user={user} />} />
       </Routes>
