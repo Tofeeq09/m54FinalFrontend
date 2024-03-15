@@ -1,5 +1,3 @@
-// Path: src/pages/components/cards/EventCard.jsx
-
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Modal from "react-modal";
@@ -49,7 +47,6 @@ const EventCard = ({ event, currentUserRole, onDelete, onClick }) => {
           <h2>
             #{id} {name}
           </h2>
-          <p>Group: {Group?.name}</p>
         </div>
 
         <div className="button-group">
@@ -96,6 +93,7 @@ const EventCard = ({ event, currentUserRole, onDelete, onClick }) => {
           </div>
         </Modal>
       </div>
+      <p>Group: {Group?.name}</p>
       <p>{description}</p>
       <p>Location: {location}</p>
       <p>Date: {date}</p>

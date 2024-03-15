@@ -97,7 +97,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
                 />
               </summary>
               {groupErr && <p>{groupErr}</p>}
-              <div className="group-content">
+              <div className="members-positioning">
                 {groups.map((group) => (
                   <GroupCard
                     key={group?.id}
@@ -116,14 +116,17 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
             <summary className="title">
               Upcoming Events ({events?.upcomingEvents.length || 0})
             </summary>
-            {eventErr && <p>{eventErr}</p>}
-            {events?.upcomingEvents.map((event) => (
-              <EventCard
-                key={event?.id}
-                event={event}
-                onClick={() => navigate(`/event/${event?.id}`)}
-              />
-            ))}
+            <div className="events-positioning">
+              {eventErr && <p>{eventErr}</p>}
+              {events?.upcomingEvents.map((event) => (
+                <EventCard
+                  className="event-card-width"
+                  key={event?.id}
+                  event={event}
+                  onClick={() => navigate(`/event/${event?.id}`)}
+                />
+              ))}
+            </div>
           </details>
 
           <details>
