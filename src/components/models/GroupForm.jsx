@@ -89,8 +89,8 @@ const GroupForm = ({ isOpen, onClose, token, onGroupCreated }) => {
               Comics/Manga
             </label>
             <label>
-              <input type="checkbox" name="topics" value="Movies & TV" />
-              Movies & TV
+              <input type="checkbox" name="topics" value="Media" />
+              Media
             </label>
             <label>
               <input type="checkbox" name="topics" value="Coding" />
