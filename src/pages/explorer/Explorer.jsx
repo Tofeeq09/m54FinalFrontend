@@ -109,12 +109,8 @@ const Explorer = ({ user }) => {
             Comics/Manga
           </label>
           <label>
-            <input
-              type="checkbox"
-              value="Movies & TV"
-              onChange={handleTopicChange}
-            />
-            Movies & TV
+            <input type="checkbox" value="Media" onChange={handleTopicChange} />
+            Media
           </label>
           <label>
             <input
