@@ -17,6 +17,7 @@ import {
   joinGroup,
   createGroupPost,
   removeUserFromGroup,
+  adminDeleteEvent,
 } from "../../utils/fetch";
 import UserCard from "../../components/cards/UserCard";
 import EventCard from "../../components/cards/EventCard";
@@ -61,7 +62,7 @@ const GroupPage = ({ user, token }) => {
   const currentUserRole = currentUser?.GroupUser?.role;
 
   const handleEventCreated = (newEvent) => {
-    setEvents((prevEvents) => [...prevEvents, newEvent]);
+    setEvents((prevEvents) => [...prevEvents, { ...newEvent, Group: group }]);
   };
 
   const handleLeaveGroup = async () => {
@@ -116,6 +117,15 @@ const GroupPage = ({ user, token }) => {
     try {
       await removeUserFromGroup(groupId, userId, token);
       setUsers((prevUsers) => prevUsers.filter((u) => u.id !== userId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteEvent = async (eventId) => {
+    try {
+      await adminDeleteEvent(eventId, groupId, token);
+      setEvents((prevEvents) => prevEvents.filter((e) => e.id !== eventId));
     } catch (error) {
       console.error(error);
     }
@@ -211,6 +221,8 @@ const GroupPage = ({ user, token }) => {
             <EventCard
               key={event.id}
               event={event}
+              currentUserRole={currentUserRole}
+              onDelete={currentUserRole === "admin" ? handleDeleteEvent : null}
               onClick={() => navigate(`/event/${event.id}`)}
             />
           )

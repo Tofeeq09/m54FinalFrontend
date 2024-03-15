@@ -22,7 +22,10 @@ const UpdateUserForm = ({ isOpen, onClose, token, setUser }) => {
     try {
       const updatedUser = await sendUpdatedUser(userData, token);
       setUser(updatedUser, () => {
-        navigate(`/users/${updatedUser.username}`);
+        setUser(null);
+        navigate("/");
+        document.cookie =
+          "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         onClose();
       });
     } catch (error) {

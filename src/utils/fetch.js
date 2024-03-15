@@ -538,7 +538,7 @@ export const deleteEvent = async (eventId, token) => {
 
 export const adminDeleteEvent = async (eventId, groupId, token) => {
   const response = await fetch(
-    `${url}/api/events/groups/${groupId}/event/${eventId}`,
+    `${url}/api/events/group/${groupId}/event/${eventId}`,
     {
       method: "DELETE",
       mode: "cors",
