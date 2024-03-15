@@ -1,10 +1,10 @@
 // Path: src/pages/dashboard/Dashboard.jsx
-
+ 
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-
+ 
 import "./Dashboard.scss";
 import { getUserGroups, getUserEvents, getFollowData } from "../../utils/fetch";
 import { validTopics } from "../../utils/staticData";
@@ -13,7 +13,7 @@ import GroupForm from "../../components/models/GroupForm";
 import EventCard from "../../components/cards/EventCard";
 import TopicCard from "../../components/cards/TopicCard";
 import UserCard from "../../components/cards/UserCard";
-
+ 
 const Dashboard = ({ user, token, followData, setFollowData }) => {
   const [groups, setGroups] = useState([]);
   const [groupErr, setGroupErr] = useState(null);
@@ -21,9 +21,9 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
   const [events, setEvents] = useState({ pastEvents: [], upcomingEvents: [] });
   const [eventErr, setEventErr] = useState(null);
   const [topics, setTopics] = useState([]);
-
+ 
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     if (user) {
       const fetchGroups = async () => {
@@ -34,7 +34,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
           setGroupErr(error.message);
         }
       };
-
+ 
       const fetchEvents = async () => {
         try {
           const data = await getUserEvents(user?.id);
@@ -43,7 +43,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
           setEventErr(error.message);
         }
       };
-
+ 
       const fetchTopics = async () => {
         try {
           const data = await validTopics();
@@ -52,7 +52,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
           console.error(error);
         }
       };
-
+ 
       const fetchFollowData = async () => {
         try {
           const data = await getFollowData(user?.id, token);
@@ -61,7 +61,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
           console.error(error);
         }
       };
-
+ 
       fetchGroups();
       fetchEvents();
       fetchTopics();
@@ -70,11 +70,11 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
       navigate("/");
     }
   }, [user, navigate, token, setFollowData]);
-
+ 
   const handleGroupCreated = (newGroup) => {
     setGroups((prevGroups) => [...prevGroups, newGroup]);
   };
-
+ 
   return (
     <div className="dashboard">
       {user && <h1>Hello, {user?.username}!</h1>}
@@ -87,7 +87,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
                 <TopicCard key={index} topic={topic} />
               ))}
             </div>
-
+ 
             <details>
               <summary className="title">
                 Your Groups ({groups.length}){" "}
@@ -110,7 +110,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
             </details>
           </div>
         </div>
-
+ 
         <div className="events">
           <details>
             <summary className="title">
@@ -128,7 +128,7 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
               ))}
             </div>
           </details>
-
+ 
           <details>
             <summary className="title">
               Past Events ({events?.pastEvents.length || 0})
@@ -144,35 +144,39 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
           </details>
         </div>
       </div>
-
+ 
       <div className="followers">
         <details>
           <summary className="title">
             Followers ({followData.followers.length})
           </summary>
-          {followData.followers.map((user) => (
-            <UserCard
-              key={user.id}
-              user={user}
-              onClick={() => navigate(`/profile/${user.username}`)}
-            />
-          ))}
+          <div className="members-positioning">
+            {followData.followers.map((user) => (
+              <UserCard
+                key={user.id}
+                user={user}
+                onClick={() => navigate(`/profile/${user.username}`)}
+              />
+            ))}
+          </div>
         </details>
-
+ 
         <details>
           <summary className="title">
             Following ({followData.following.length})
           </summary>
-          {followData.following.map((user) => (
-            <UserCard
-              key={user.id}
-              user={user}
-              onClick={() => navigate(`/profile/${user.username}`)}
-            />
-          ))}
+          <div className="members-positioning">
+            {followData.following.map((user) => (
+              <UserCard
+                key={user.id}
+                user={user}
+                onClick={() => navigate(`/profile/${user.username}`)}
+              />
+            ))}
+          </div>
         </details>
       </div>
-
+ 
       <GroupForm
         isOpen={isAddGroupModalOpen}
         onClose={() => setIsAddGroupModalOpen(false)}
@@ -182,12 +186,12 @@ const Dashboard = ({ user, token, followData, setFollowData }) => {
     </div>
   );
 };
-
+ 
 Dashboard.propTypes = {
   user: PropTypes.object,
   token: PropTypes.string,
   followData: PropTypes.object,
   setFollowData: PropTypes.func,
 };
-
+ 
 export default Dashboard;
