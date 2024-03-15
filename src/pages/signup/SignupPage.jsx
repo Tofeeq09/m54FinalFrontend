@@ -67,7 +67,12 @@ const SignupPage = ({ user, setUser }) => {
         <button className="form-button signup-button" type="submit">
           Signup
         </button>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage ===
+        "Cannot read properties of undefined (reading 'authToken')" ? (
+          <p className="error-message">User does not exist.</p>
+        ) : (
+          errorMessage && <p className="error-message">{errorMessage}</p>
+        )}
       </form>
     </div>
   );

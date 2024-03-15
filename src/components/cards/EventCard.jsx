@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./EventCard.scss";
 import UserCard from "./UserCard";
 
-const EventCard = ({ event, onClick }) => {
+const EventCard = ({ event, currentUserRole, onDelete, onClick }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -52,7 +52,22 @@ const EventCard = ({ event, onClick }) => {
           <p>Group: {Group?.name}</p>
         </div>
 
-        <button onClick={toggleModal}>View Attendees ({attendeeCount})</button>
+        <div className="button-group">
+          <button onClick={toggleModal}>
+            View Attendees ({attendeeCount})
+          </button>
+          {currentUserRole === "admin" && onDelete && (
+            <button
+              className="delete-button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(id);
+              }}
+            >
+              Delete
+            </button>
+          )}
+        </div>
         <Modal
           isOpen={isModalOpen}
           onRequestClose={toggleModal}
@@ -96,6 +111,8 @@ const EventCard = ({ event, onClick }) => {
 EventCard.propTypes = {
   event: PropTypes.object,
   onClick: PropTypes.func,
+  currentUserRole: PropTypes.string,
+  onDelete: PropTypes.func,
 };
 
 export default EventCard;

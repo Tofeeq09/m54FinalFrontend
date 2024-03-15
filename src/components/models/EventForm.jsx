@@ -109,7 +109,12 @@ const EventForm = ({ isOpen, onClose, token, groupId, onEventCreated }) => {
             Close
           </button>
         </div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage ===
+        "Cannot read properties of undefined (reading 'authToken')" ? (
+          <p className="error-message">User does not exist.</p>
+        ) : (
+          errorMessage && <p className="error-message">{errorMessage}</p>
+        )}
       </form>
     </Modal>
   );
